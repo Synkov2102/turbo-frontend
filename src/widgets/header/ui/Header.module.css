@@ -1,0 +1,41 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid #eaeaea;
+  background: var(--mui-palette-primary-main); /* ← Primary MUI color */
+  color: var(--mui-palette-primary-contrastText, #fff);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  height: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.navItem {
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.navItem:hover {
+  opacity: 0.6;
+}
