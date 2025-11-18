@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeRegistry } from "./ThemeRegistry";
 import { ReactQueryProvider } from "./ReactQueryProvider";
+import { PageLayout } from "@/shared/layout/page-layout/PageLayout";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -17,7 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            <PageLayout>{children}</PageLayout>
+          </ReactQueryProvider>
         </ThemeRegistry>
       </body>
     </html>

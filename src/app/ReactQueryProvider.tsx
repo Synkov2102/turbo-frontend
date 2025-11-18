@@ -33,7 +33,6 @@ export function ReactQueryProvider({ children }: ReactQueryProviderProps) {
 
   return (
     <QueryClientProvider client={client}>
-      <Header />
       {children}
       {/* сюда можно подключить Devtools при необходимости */}
     </QueryClientProvider>

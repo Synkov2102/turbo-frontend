@@ -1,0 +1,14 @@
+.card {
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.divider {
+  margin: 8px 0 12px !important;
+}

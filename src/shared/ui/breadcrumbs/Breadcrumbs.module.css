@@ -1,0 +1,17 @@
+.root {
+  margin-bottom: 12px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--mui-palette-primary-main);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.item {
+  font-size: 13px;
+}

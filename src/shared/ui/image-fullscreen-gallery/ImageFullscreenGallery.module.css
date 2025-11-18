@@ -1,0 +1,151 @@
+.dialogPaper {
+  background: #000;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: #fff;
+  background: var(--mui-palette-primary-main);
+}
+
+.header {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  color: #fff;
+}
+
+.counter {
+  color: #ccc;
+}
+
+.closeButton {
+  color: #fff !important;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 4px 16px;
+  gap: 12px;
+}
+
+/* основной слайдер */
+.mainSlider {
+  flex: 1;
+  min-height: 0;
+}
+
+.mainSwiper {
+  width: 100%;
+  height: 100%;
+}
+
+.mainImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: calc(99dvh - 160px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+@media (min-width: 1360px) {
+  .mainImageWrapper {
+    max-height: calc(100vh - 200px);
+  }
+}
+
+@media (min-width: 1920px) {
+  .mainImageWrapper {
+    max-height: calc(100vh - 250px);
+  }
+}
+
+@media (min-width: 2500px) {
+  .mainImageWrapper {
+    max-height: calc(100vh - 300px);
+  }
+}
+
+/* добавляем блюренный фон */
+.mainImageWrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg-url);
+  background-size: cover;
+  background-position: center;
+  filter: blur(16px) brightness(0.8);
+  transform: scale(1.15);
+  z-index: 1;
+}
+
+/* само изображение */
+.mainImageWrapper img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* превью */
+
+.thumbsWrapper {
+  padding-top: 4px;
+}
+
+.thumbSwiper {
+  width: 100%;
+}
+
+.thumbItem {
+  position: relative;
+  padding-top: 70%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #222;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.thumbItem img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbItem:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* активный превью-слайд */
+.thumbSwiper :global(.swiper-slide-thumb-active) .thumbItem {
+  opacity: 1;
+  border: 3px solid #fff;
+}
+
+/* стрелки свайпера */
+:global(.swiper-button-prev),
+:global(.swiper-button-next) {
+  color: #fff;
+}

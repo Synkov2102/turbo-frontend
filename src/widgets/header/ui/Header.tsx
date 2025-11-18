@@ -19,15 +19,6 @@ export function Header() {
             priority
           />
         </Link>
-
-        {/* <nav className={styles.nav}>
-          <Link href="/cars" className={styles.navItem}>
-            Авто
-          </Link>
-          <Link href="/about" className={styles.navItem}>
-            О нас
-          </Link>
-        </nav> */}
       </div>
     </header>
   );
