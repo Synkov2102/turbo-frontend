@@ -1,0 +1,36 @@
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filterItem {
+  min-width: 0;
+}
+
+.filterItem label {
+  font-weight: 500;
+}
+
+.filterItem :global(.MuiInputBase-root) {
+  border-radius: 6px;
+}
+
+.filterItem :global(.MuiOutlinedInput-root) {
+  background-color: #fff;
+}
+
+.filterItem
+  :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+}
+
+.filterItem :global(.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+.filterItem :global(.MuiInputLabel-root.Mui-focused) {
+  color: #1976d2;
+}
+

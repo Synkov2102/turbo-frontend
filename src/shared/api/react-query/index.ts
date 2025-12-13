@@ -33,4 +33,9 @@ export const queryKeys = {
     one: (id: string) => ["car", id] as const,
     list: (filters: unknown) => ["cars", filters] as const,
   },
+  filters: {
+    options: () => ["filters", "options"] as const,
+    models: (brand: string | undefined) =>
+      ["filters", "models", brand] as const,
+  },
 };

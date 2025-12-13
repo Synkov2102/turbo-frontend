@@ -15,6 +15,33 @@ interface CarBase {
   createdAt?: string; // строка с датой
 }
 
+// features/car/model/types.ts
+export interface FilterOptions {
+  brands: string[];
+  cities: string[];
+  transmissions: string[];
+  models: string[];
+  minYear: number;
+  maxYear: number;
+  minPrice: number;
+  maxPrice: number;
+  minEngineVolume: number;
+  maxEngineVolume: number;
+}
+
+export interface GetCarsFilters {
+  brand?: string;
+  model?: string;
+  minYear?: number;
+  maxYear?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  city?: string;
+  transmission?: string;
+  minEngineVolume?: number;
+  maxEngineVolume?: number;
+}
+
 export interface Car extends CarBase {
   id: string; // на фронте у нас всегда есть нормальный id
 }

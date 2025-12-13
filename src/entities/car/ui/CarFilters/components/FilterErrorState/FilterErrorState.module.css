@@ -1,0 +1,17 @@
+.error {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+}
+
+.error p {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin: 0;
+  text-align: center;
+}
+

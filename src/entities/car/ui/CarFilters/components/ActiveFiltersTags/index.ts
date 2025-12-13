@@ -1,0 +1,2 @@
+export { ActiveFiltersTags } from "./ActiveFiltersTags";
+

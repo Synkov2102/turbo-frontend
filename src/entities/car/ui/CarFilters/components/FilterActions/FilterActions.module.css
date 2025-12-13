@@ -1,0 +1,26 @@
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.resetButton {
+  flex: 1;
+  text-transform: none;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.applyButton {
+  flex: 1;
+  border-radius: 6px;
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+}
+
