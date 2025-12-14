@@ -37,33 +37,21 @@ export const YearPriceFilters: FC<YearPriceFiltersProps> = ({
   const handleYearChange = useCallback(
     (_: unknown, newValue: number | number[]) => {
       if (Array.isArray(newValue)) {
-        onFilterChange(
-          "minYear",
-          newValue[0] === filterOptions.minYear ? undefined : newValue[0]
-        );
-        onFilterChange(
-          "maxYear",
-          newValue[1] === filterOptions.maxYear ? undefined : newValue[1]
-        );
+        onFilterChange("minYear", newValue[0]);
+        onFilterChange("maxYear", newValue[1]);
       }
     },
-    [filterOptions, onFilterChange]
+    [onFilterChange]
   );
 
   const handlePriceChange = useCallback(
     (_: unknown, newValue: number | number[]) => {
       if (Array.isArray(newValue)) {
-        onFilterChange(
-          "minPrice",
-          newValue[0] === filterOptions.minPrice ? undefined : newValue[0]
-        );
-        onFilterChange(
-          "maxPrice",
-          newValue[1] === filterOptions.maxPrice ? undefined : newValue[1]
-        );
+        onFilterChange("minPrice", newValue[0]);
+        onFilterChange("maxPrice", newValue[1]);
       }
     },
-    [filterOptions, onFilterChange]
+    [onFilterChange]
   );
 
   return (
