@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeRegistry } from "./ThemeRegistry";
 import { ReactQueryProvider } from "./ReactQueryProvider";
-import { PageLayout } from "@/shared/layout/page-layout/PageLayout";
+import { Header } from "@/widgets/header/ui/Header";
+import styles from "./layout.module.css";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -19,7 +20,12 @@ export default function RootLayout({
       <body>
         <ThemeRegistry>
           <ReactQueryProvider>
-            <PageLayout>{children}</PageLayout>
+            <div className={styles.layout}>
+              <Header />
+              <main className={styles.main}>
+                <div className={styles.inner}>{children}</div>
+              </main>
+            </div>
           </ReactQueryProvider>
         </ThemeRegistry>
       </body>

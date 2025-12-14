@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import styles from "../shared/FilterField.module.css";
-import { GetCarsFilters, FilterOptions } from "../../../../model/types";
+import styles from "@/entities/car/ui/CarFilters/components/shared/FilterField.module.css";
+import { GetCarsFilters, FilterOptions } from "@/entities/car/model/types";
 
 interface LocationTransmissionFiltersProps {
   filters: GetCarsFilters;

@@ -8,14 +8,23 @@ import { CarFilters } from "@/entities/car/ui/CarFilters";
 
 export default function HomePage() {
   const [filters, setFilters] = useState<GetCarsFilters>({});
+  const [page, setPage] = useState(1);
 
   const handleFiltersChange = (newFilters: GetCarsFilters) => {
     setFilters(newFilters);
+    setPage(1);
   };
 
   const handleFiltersReset = () => {
     setFilters({});
+    setPage(1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
       <section className={styles.header}>
@@ -28,7 +37,7 @@ export default function HomePage() {
         onFiltersReset={handleFiltersReset}
       />
       <section>
-        <CarList filters={filters} />
+        <CarList filters={filters} page={page} onPageChange={handlePageChange} />
       </section>
     </>
   );

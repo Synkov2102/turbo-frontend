@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Chip, Box } from "@mui/material";
-import { GetCarsFilters } from "../../../../api/get-cars";
+import { GetCarsFilters } from "@/entities/car/model/types";
 import styles from "./ActiveFiltersTags.module.css";
 
 interface ActiveFiltersTagsProps {

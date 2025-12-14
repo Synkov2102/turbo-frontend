@@ -3,9 +3,9 @@
 import { FC, useState } from "react";
 import { Button } from "@mui/material";
 import styles from "./CarFilters.module.css";
-import { GetCarsFilters } from "../../api/get-cars";
-import { CarFiltersDrawer } from "../CarFiltersDrawer/CarFiltersDrawer";
-import { ActiveFiltersTags } from "./components/ActiveFiltersTags";
+import { GetCarsFilters } from "@/entities/car/model/types";
+import { CarFiltersDrawer } from "@/entities/car/ui/CarFiltersDrawer/CarFiltersDrawer";
+import { ActiveFiltersTags } from "@/entities/car/ui/CarFilters/components/ActiveFiltersTags";
 import SearchIcon from "@mui/icons-material/Search";
 
 interface CarFiltersProps {

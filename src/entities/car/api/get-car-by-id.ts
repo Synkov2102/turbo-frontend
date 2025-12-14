@@ -1,5 +1,5 @@
 import { fetchJson } from "@/shared/api/http";
-import { Car, RawCar, mapCar } from "../model/types";
+import { Car, RawCar, mapCar } from "@/entities/car/model/types";
 
 /**
  * Получить одну машину по id.

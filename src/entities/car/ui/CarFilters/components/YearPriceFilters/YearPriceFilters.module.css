@@ -1,0 +1,81 @@
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.label {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.inputsRow {
+  display: flex;
+  gap: 12px;
+}
+
+.filterItem {
+  flex: 1;
+  min-width: 0;
+}
+
+.filterItem label {
+  font-weight: 500;
+}
+
+.filterItem :global(.MuiInputBase-root) {
+  border-radius: 6px;
+}
+
+.filterItem :global(.MuiOutlinedInput-root) {
+  background-color: #fff;
+}
+
+.filterItem
+  :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+}
+
+.filterItem :global(.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+.filterItem :global(.MuiInputLabel-root.Mui-focused) {
+  color: #1976d2;
+}
+
+.sliderContainer {
+  width: calc(100% - 32px);
+  margin: 8px 16px 0;
+  box-sizing: border-box;
+}
+
+.slider {
+  width: 100%;
+}
+
+.slider :global(.MuiSlider-root) {
+  width: 100%;
+}
+
+.slider :global(.MuiSlider-thumb) {
+  width: 18px;
+  height: 18px;
+}
+
+.slider :global(.MuiSlider-track) {
+  height: 4px;
+}
+
+.slider :global(.MuiSlider-rail) {
+  height: 4px;
+}

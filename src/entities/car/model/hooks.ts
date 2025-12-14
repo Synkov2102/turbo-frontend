@@ -1,14 +1,14 @@
 "use client";
 
-import { Car, FilterOptions } from "./types";
-import { GetCarsFilters, getCars } from "../api/get-cars";
-import { getCarById } from "../api/get-car-by-id";
+import { Car, FilterOptions, PaginatedResponse, GetCarsFilters } from "./types";
+import { getCars } from "@/entities/car/api/get-cars";
+import { getCarById } from "@/entities/car/api/get-car-by-id";
 import { queryKeys, useAppQuery } from "@/shared/api/react-query";
-import { getFilterOptions } from "../api/get-filters-options";
-import { getModelsByBrand } from "../api/get-models-by-brand";
+import { getFilterOptions } from "@/entities/car/api/get-filters-options";
+import { getModelsByBrand } from "@/entities/car/api/get-models-by-brand";
 
 export function useCars(filters: GetCarsFilters = {}) {
-  return useAppQuery<Car[]>({
+  return useAppQuery<PaginatedResponse<Car>>({
     queryKey: queryKeys.car.list(filters),
     queryFn: () => getCars(filters),
   });

@@ -3,7 +3,7 @@
 import { FC } from "react";
 
 import styles from "./CarCard.module.css";
-import { Car } from "../../model/types";
+import { Car } from "@/entities/car/model/types";
 import PlaceIcon from "@mui/icons-material/Place";
 
 interface CarCardProps {

@@ -2,15 +2,15 @@
 
 import { FC, useState } from "react";
 import { Drawer } from "@mui/material";
-import { GetCarsFilters } from "../../api/get-cars";
-import { useFilterOptions } from "../../model/hooks";
-import { FilterHeader } from "../CarFilters/components/FilterHeader";
-import { BrandModelFilters } from "../CarFilters/components/BrandModelFilters";
-import { LocationTransmissionFilters } from "../CarFilters/components/LocationTransmissionFilters";
-import { YearPriceFilters } from "../CarFilters/components/YearPriceFilters";
-import { FilterActions } from "../CarFilters/components/FilterActions";
-import { FilterLoadingState } from "../CarFilters/components/FilterLoadingState";
-import { FilterErrorState } from "../CarFilters/components/FilterErrorState";
+import { GetCarsFilters } from "@/entities/car/model/types";
+import { useFilterOptions } from "@/entities/car/model/hooks";
+import { FilterHeader } from "@/entities/car/ui/CarFilters/components/FilterHeader";
+import { BrandModelFilters } from "@/entities/car/ui/CarFilters/components/BrandModelFilters";
+import { LocationTransmissionFilters } from "@/entities/car/ui/CarFilters/components/LocationTransmissionFilters";
+import { YearPriceFilters } from "@/entities/car/ui/CarFilters/components/YearPriceFilters";
+import { FilterActions } from "@/entities/car/ui/CarFilters/components/FilterActions";
+import { FilterLoadingState } from "@/entities/car/ui/CarFilters/components/FilterLoadingState";
+import { FilterErrorState } from "@/entities/car/ui/CarFilters/components/FilterErrorState";
 import styles from "./CarFiltersDrawer.module.css";
 
 interface CarFiltersDrawerProps {

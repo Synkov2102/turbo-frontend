@@ -2,7 +2,6 @@
 
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Header } from "@/widgets/header/ui/Header";
 
 let queryClient: QueryClient | null = null;
 

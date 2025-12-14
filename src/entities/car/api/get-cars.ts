@@ -1,25 +1,19 @@
 import { fetchJson } from "@/shared/api/http";
-import { Car, mapCar, RawCar } from "../model/types";
+import { Car, mapCar, RawCar, PaginatedResponse, PaginationMeta, GetCarsFilters } from "@/entities/car/model/types";
 
-export interface GetCarsFilters {
-  brand?: string;
-  model?: string;
-  minYear?: number;
-  maxYear?: number;
-  minPrice?: number;
-  maxPrice?: number;
-  city?: string;
-  transmission?: string;
-  minEngineVolume?: number;
-  maxEngineVolume?: number;
+interface RawPaginatedResponse {
+  data: RawCar[];
+  meta: PaginationMeta;
 }
 
 /**
- * Получить список машин с фильтрами.
- * Маппинг query-параметров совпадает с твоим Nest-контроллером.
+ * Получить список машин с фильтрами и пагинацией.
+ * Маппинг query-параметров совпадает с Nest-контроллером.
  */
-export async function getCars(filters: GetCarsFilters = {}): Promise<Car[]> {
-  const result = await fetchJson<RawCar[]>("/cars", {
+export async function getCars(
+  filters: GetCarsFilters = {}
+): Promise<PaginatedResponse<Car>> {
+  const result = await fetchJson<RawPaginatedResponse>("/cars", {
     params: {
       brand: filters.brand,
       model: filters.model,
@@ -31,8 +25,13 @@ export async function getCars(filters: GetCarsFilters = {}): Promise<Car[]> {
       transmission: filters.transmission,
       minEngineVolume: filters.minEngineVolume,
       maxEngineVolume: filters.maxEngineVolume,
+      page: filters.page,
+      limit: filters.limit,
     },
   });
 
-  return result.map(mapCar);
+  return {
+    data: result.data.map(mapCar),
+    meta: result.meta,
+  };
 }
