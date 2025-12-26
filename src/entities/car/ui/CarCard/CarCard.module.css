@@ -24,6 +24,27 @@
   background: #f5f5f5;
 }
 
+.statusBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.statusActive {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.statusSold {
+  background-color: #f44336;
+  color: #fff;
+}
+
 .imageWrapper img {
   position: absolute;
   inset: 0;

@@ -10,8 +10,32 @@ interface CarCardProps {
   car: Car;
 }
 
+const getStatusLabel = (status?: string): string | null => {
+  switch (status) {
+    case "active":
+      return "Активно";
+    case "sold":
+      return "Продано";
+    default:
+      return null;
+  }
+};
+
+const getStatusClassName = (status?: string): string => {
+  switch (status) {
+    case "active":
+      return styles.statusActive;
+    case "sold":
+      return styles.statusSold;
+    default:
+      return "";
+  }
+};
+
 export const CarCard: FC<CarCardProps> = ({ car }) => {
   const mainImage = car.images?.[0];
+  const statusLabel = getStatusLabel(car.status);
+  const statusClassName = getStatusClassName(car.status);
 
   return (
     <a href={`/cars/${car.id}`} className={styles.card}>
@@ -21,6 +45,11 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
           <img src={mainImage} alt={car.title} />
         ) : (
           <div className={styles.placeholder}>Нет фото</div>
+        )}
+        {statusLabel && (
+          <div className={`${styles.statusBadge} ${statusClassName}`}>
+            {statusLabel}
+          </div>
         )}
       </div>
 

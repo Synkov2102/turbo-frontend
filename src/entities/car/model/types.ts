@@ -13,6 +13,7 @@ interface CarBase {
   url: string;
   images?: string[];
   createdAt?: string; // строка с датой
+  status?: "active" | "sold" | "removed" | "unknown";
 }
 
 // features/car/model/types.ts

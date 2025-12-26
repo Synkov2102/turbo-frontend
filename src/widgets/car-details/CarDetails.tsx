@@ -93,6 +93,22 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
       </div>
 
       <div className={styles.badges}>
+        {car.status === "active" && (
+          <Chip
+            label="Активно"
+            size="small"
+            color="success"
+            sx={{ fontWeight: 600 }}
+          />
+        )}
+        {car.status === "sold" && (
+          <Chip
+            label="Продано"
+            size="small"
+            color="error"
+            sx={{ fontWeight: 600 }}
+          />
+        )}
         {car.year && (
           <Chip label={`${car.year} г.`} size="small" color="primary" />
         )}
