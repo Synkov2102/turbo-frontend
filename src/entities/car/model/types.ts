@@ -4,9 +4,17 @@ interface CarBase {
   brand?: string;
   model?: string;
   year?: number;
-  price?: number;
+  price?: {
+    RUB?: number;
+    USD?: number;
+    EUR?: number;
+  };
   mileage?: number;
-  city?: string;
+  city?: string; // для обратной совместимости
+  location?: {
+    city?: string;
+    country?: string;
+  };
   transmission?: string;
   engineVolume?: number;
   description?: string;
@@ -14,6 +22,7 @@ interface CarBase {
   images?: string[];
   createdAt?: string; // строка с датой
   status?: "active" | "sold" | "removed" | "unknown";
+  lastChecked?: string; // строка с датой последней проверки статуса
 }
 
 // features/car/model/types.ts
@@ -37,6 +46,7 @@ export interface GetCarsFilters {
   maxYear?: number;
   minPrice?: number;
   maxPrice?: number;
+  priceCurrency?: "RUB" | "USD" | "EUR";
   city?: string;
   transmission?: string;
   minEngineVolume?: number;

@@ -21,6 +21,7 @@ export async function getCars(
       maxYear: filters.maxYear,
       minPrice: filters.minPrice,
       maxPrice: filters.maxPrice,
+      priceCurrency: filters.priceCurrency,
       city: filters.city,
       transmission: filters.transmission,
       minEngineVolume: filters.minEngineVolume,

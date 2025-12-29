@@ -1,5 +1,9 @@
 import { FC } from "react";
-import { Pagination as MuiPagination } from "@mui/material";
+import {
+  Pagination as MuiPagination,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import styles from "./Pagination.module.css";
 
 interface PaginationProps {
@@ -13,6 +17,9 @@ export const Pagination: FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (totalPages <= 1) {
     return null;
   }
@@ -30,10 +37,16 @@ export const Pagination: FC<PaginationProps> = ({
         page={page}
         onChange={handleChange}
         color="primary"
-        showFirstButton
-        showLastButton
+        showFirstButton={!isMobile}
+        showLastButton={!isMobile}
         siblingCount={1}
         boundaryCount={1}
+        sx={{
+          "& .MuiPagination-ul": {
+            flexWrap: "nowrap",
+            justifyContent: "center",
+          },
+        }}
       />
     </div>
   );

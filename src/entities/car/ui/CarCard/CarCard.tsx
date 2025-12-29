@@ -57,15 +57,32 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
         <div className={styles.title}>{car.title}</div>
 
         <div className={styles.footer}>
-          {car.price && (
+          {car.price?.RUB && (
             <span className={styles.price}>
-              {car.price.toLocaleString("ru-RU")} ₽
+              {car.price.RUB.toLocaleString("ru-RU")} ₽
+              {(car.price.USD || car.price.EUR) && (
+                <span className={styles.otherCurrencies}>
+                  {car.price.USD && (
+                    <span className={styles.currency}>
+                      / {car.price.USD.toLocaleString("ru-RU")} $
+                    </span>
+                  )}
+                  {car.price.EUR && (
+                    <span className={styles.currency}>
+                      / {car.price.EUR.toLocaleString("ru-RU")} €
+                    </span>
+                  )}
+                </span>
+              )}
             </span>
           )}
-          {car.city && (
+          {(car.location?.city || car.city) && (
             <span className={styles.city}>
               <PlaceIcon fontSize="small" />{" "}
-              <span className={styles.cityName}>{car.city}</span>
+              <span className={styles.cityName}>
+                {car.location?.city || car.city}
+                {car.location?.country && `, ${car.location.country}`}
+              </span>
             </span>
           )}
         </div>

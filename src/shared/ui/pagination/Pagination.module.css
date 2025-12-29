@@ -3,5 +3,12 @@
   justify-content: center;
   margin-top: 32px;
   margin-bottom: 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pagination :global(.MuiPagination-ul) {
+  flex-wrap: nowrap !important;
+  min-width: min-content;
 }
 

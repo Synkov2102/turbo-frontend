@@ -80,14 +80,30 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
       />
       <div className={styles.headerRow}>
         <div className={styles.titleBlock}>
-          <Typography variant="h5" component="h1" className={styles.title}>
+          <Typography variant="h4" component="h1" className={styles.title}>
             {car.title}
           </Typography>
         </div>
 
-        {car.price && (
-          <Typography variant="h5" className={styles.price}>
-            {car.price.toLocaleString("ru-RU")} ₽
+        {car.price?.RUB && (
+          <Typography variant="h4" className={styles.price}>
+            <span className={styles.mainPrice}>
+              {car.price.RUB.toLocaleString("ru-RU")} ₽
+            </span>
+            {(car.price.USD || car.price.EUR) && (
+              <span className={styles.otherCurrencies}>
+                {car.price.USD && (
+                  <span className={styles.currency}>
+                    / {car.price.USD.toLocaleString("ru-RU")} $
+                  </span>
+                )}
+                {car.price.EUR && (
+                  <span className={styles.currency}>
+                    / {car.price.EUR.toLocaleString("ru-RU")} €
+                  </span>
+                )}
+              </span>
+            )}
           </Typography>
         )}
       </div>
@@ -119,7 +135,17 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
             variant="outlined"
           />
         )}
-        {car.city && <Chip label={car.city} size="small" variant="outlined" />}
+        {(car.location?.city || car.city) && (
+          <Chip
+            label={
+              car.location?.city || car.city
+                ? `${car.location?.city || car.city}${car.location?.country ? `, ${car.location.country}` : ""}`
+                : ""
+            }
+            size="small"
+            variant="outlined"
+          />
+        )}
       </div>
 
       <div className={styles.mainContent}>
@@ -185,7 +211,11 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
 
         {/* КОЛОНКА С ИНФОЙ */}
         <div className={styles.infoBlock}>
-          <InfoCard title="Характеристики" bodyClassName={styles.specGrid}>
+          <InfoCard
+            title="Характеристики"
+            bodyClassName={styles.specGrid}
+            className={styles.specsCard}
+          >
             {car.brand && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Марка</span>
@@ -216,10 +246,13 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
                 <span className={styles.specValue}>{car.transmission}</span>
               </div>
             )}
-            {car.city && (
+            {(car.location?.city || car.city) && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Город</span>
-                <span className={styles.specValue}>{car.city}</span>
+                <span className={styles.specValue}>
+                  {car.location?.city || car.city}
+                  {car.location?.country && `, ${car.location.country}`}
+                </span>
               </div>
             )}
           </InfoCard>

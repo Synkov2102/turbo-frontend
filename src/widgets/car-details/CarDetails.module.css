@@ -40,6 +40,37 @@
   font-weight: 700;
   white-space: nowrap;
   color: var(--mui-palette-primary-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 28px;
+}
+
+@media (min-width: 600px) {
+  .price {
+    font-size: 34px;
+    gap: 8px;
+  }
+}
+
+.mainPrice {
+  font-size: inherit;
+}
+
+.otherCurrencies {
+  font-size: 0.75em;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+@media (min-width: 600px) {
+  .otherCurrencies {
+    font-size: 0.7em;
+  }
+}
+
+.currency {
+  white-space: nowrap;
 }
 
 .mainContent {
@@ -132,6 +163,20 @@
   gap: 12px;
 }
 
+.specsCard {
+  background-color: var(--mui-palette-primary-main) !important;
+  border: none !important;
+  color: #fff;
+}
+
+.specsCard :global(.MuiTypography-root) {
+  color: #fff !important;
+}
+
+.specsCard :global(.MuiDivider-root) {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
 .specGrid {
   display: flex;
   flex-direction: column;
@@ -146,11 +191,12 @@
 }
 
 .specLabel {
-  color: #777;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .specValue {
   font-weight: 500;
+  color: #fff;
 }
 
 .description {
