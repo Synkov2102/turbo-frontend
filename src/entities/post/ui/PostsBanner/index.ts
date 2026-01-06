@@ -1,0 +1,4 @@
+export { PostsBanner } from "./PostsBanner";
+
+
+

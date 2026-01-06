@@ -32,16 +32,43 @@
 
 .nav {
   display: flex;
-  gap: 24px;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .nav {
+    gap: 20px;
+  }
 }
 
 .navItem {
-  font-size: 14px;
-  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, color 0.15s ease;
+  padding: 4px 0;
+  position: relative;
 }
 
 .navItem:hover {
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 1);
+  opacity: 1;
+}
+
+.navItem.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.navItem.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2px 2px 0 0;
 }

@@ -5,12 +5,13 @@ import { Dialog, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper/modules";
+import { Navigation, Thumbs, Zoom } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import "swiper/css/zoom";
 
 import styles from "./ImageFullscreenGallery.module.css";
 
@@ -69,20 +70,27 @@ export const ImageFullscreenGallery: FC<ImageFullscreenGalleryProps> = ({
           <div className={styles.mainSlider}>
             <Swiper
               className={styles.mainSwiper}
-              modules={[Navigation, Thumbs]}
+              modules={[Navigation, Thumbs, Zoom]}
               navigation
               thumbs={{ swiper: thumbsSwiper }}
+              zoom={{
+                maxRatio: 3,
+                minRatio: 1,
+                toggle: true,
+              }}
               spaceBetween={8}
               initialSlide={initialIndex}
               onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
             >
               {images.map((img, index) => (
-                <SwiperSlide key={img + index}>
+                <SwiperSlide key={img + index} zoom>
                   <div
                     className={styles.mainImageWrapper}
                     style={{ ["--bg-url" as any]: `url(${img})` }}
                   >
-                    <img src={img} alt={`${title ?? "Фото"} ${index + 1}`} />
+                    <div className={`${styles.zoomContainer} swiper-zoom-container`}>
+                      <img src={img} alt={`${title ?? "Фото"} ${index + 1}`} />
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}

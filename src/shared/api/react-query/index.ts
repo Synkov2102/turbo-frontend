@@ -38,4 +38,8 @@ export const queryKeys = {
     models: (brand: string | undefined) =>
       ["filters", "models", brand] as const,
   },
+  post: {
+    list: (filters: unknown) => ["posts", filters] as const,
+    detail: (id: string) => ["post", id] as const,
+  },
 };

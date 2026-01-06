@@ -40,3 +40,13 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Стили для эмодзи twemoji */
+img.emoji,
+.emoji {
+  height: 1em !important;
+  width: auto !important;
+  margin: 0 0.05em 0 0.1em !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+}

@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { GetCarsFilters } from "@/entities/car/model/types";
 import { useState } from "react";
 import { CarFilters } from "@/entities/car/ui/CarFilters";
+import { PostsBanner } from "@/entities/post/ui/PostsBanner";
 
 export default function HomePage() {
   const [filters, setFilters] = useState<GetCarsFilters>({});
@@ -27,6 +28,7 @@ export default function HomePage() {
 
   return (
     <>
+      <PostsBanner />
       <section className={styles.header}>
         <h1 className={styles.title}>Каталог автомобилей</h1>
       </section>
@@ -37,7 +39,11 @@ export default function HomePage() {
         onFiltersReset={handleFiltersReset}
       />
       <section>
-        <CarList filters={filters} page={page} onPageChange={handlePageChange} />
+        <CarList
+          filters={filters}
+          page={page}
+          onPageChange={handlePageChange}
+        />
       </section>
     </>
   );

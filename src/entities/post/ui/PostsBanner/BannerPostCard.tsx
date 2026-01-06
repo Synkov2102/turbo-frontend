@@ -1,0 +1,61 @@
+"use client";
+
+import { FC } from "react";
+import Link from "next/link";
+import { Post } from "@/entities/post/model/types";
+import { TwemojiText } from "@/shared/ui/twemoji";
+import styles from "./BannerPostCard.module.css";
+
+interface BannerPostCardProps {
+  post: Post;
+}
+
+/**
+ * Карточка поста для баннера (слайдера).
+ * Отображает изображение в формате 4:3 с наложенным заголовком.
+ */
+export const BannerPostCard: FC<BannerPostCardProps> = ({ post }) => {
+  const mainImage = post.images?.[0];
+
+  if (!mainImage) {
+    return null;
+  }
+
+  const content = (
+    <div className={styles.imageWrapper}>
+      <img src={mainImage} alt={post.title} />
+      <div className={styles.titleOverlay}>
+        <TwemojiText as="h2" className={styles.title} banner>
+          {post.title}
+        </TwemojiText>
+      </div>
+    </div>
+  );
+
+  const cardClassName = styles.card;
+
+  // Если есть id, делаем ссылку на детальную страницу
+  if (post.id) {
+    return (
+      <Link href={`/posts/${post.id}`} className={cardClassName}>
+        {content}
+      </Link>
+    );
+  }
+
+  // Если нет id, но есть внешняя ссылка, используем её
+  if (post.url) {
+    return (
+      <a
+        href={post.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClassName}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={cardClassName}>{content}</div>;
+};

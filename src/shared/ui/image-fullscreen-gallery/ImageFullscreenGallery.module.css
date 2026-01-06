@@ -82,7 +82,7 @@
   }
 }
 
-/* добавляем блюренный фон */
+/* добавляем блюренный фон - статичный, не зумится */
 .mainImageWrapper::before {
   content: "";
   position: absolute;
@@ -93,15 +93,46 @@
   filter: blur(16px) brightness(0.8);
   transform: scale(1.15);
   z-index: 1;
+  pointer-events: none;
 }
 
-/* само изображение */
-.mainImageWrapper img {
+/* Контейнер для зума - внутри него зумится только изображение */
+.zoomContainer {
   position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
+  cursor: grab;
+  touch-action: none;
+}
+
+.zoomContainer:active {
+  cursor: grabbing;
+}
+
+.zoomContainer.swiper-zoom-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* само изображение - зумится */
+.zoomContainer img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.zoomContainer.swiper-zoom-container > img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /* превью */

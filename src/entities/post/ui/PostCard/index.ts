@@ -1,0 +1,4 @@
+export { PostCard } from "./PostCard";
+
+
+
