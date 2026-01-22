@@ -6,7 +6,7 @@ import twemoji from "twemoji";
 interface TwemojiTextProps {
   children: string;
   className?: string;
-  as?: "h2" | "h3" | "p" | "span" | "div";
+  as?: "h2" | "h3" | "p" | "span";
   banner?: boolean;
 }
 
@@ -16,7 +16,9 @@ export const TwemojiText: FC<TwemojiTextProps> = ({
   as = "span",
   banner = false,
 }) => {
-  const ref = useRef<HTMLHeadingElement | HTMLParagraphElement | HTMLSpanElement | HTMLDivElement>(null);
+  const ref = useRef<
+    HTMLHeadingElement | HTMLParagraphElement | HTMLSpanElement
+  >(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -26,16 +28,16 @@ export const TwemojiText: FC<TwemojiTextProps> = ({
         ext: ".svg",
         className: "emoji",
       });
-      
+
       // Дополнительно применяем стили ко всем img внутри элемента
       const images = ref.current.querySelectorAll("img");
-      
+
       images.forEach((img) => {
         img.classList.add("emoji");
         img.style.height = "1em";
         img.style.width = "auto";
         img.style.display = "inline-block";
-        
+
         // Для баннера используем middle с небольшим смещением, для остальных - middle
         if (banner) {
           img.style.verticalAlign = "middle";
@@ -57,4 +59,3 @@ export const TwemojiText: FC<TwemojiTextProps> = ({
     </Component>
   );
 };
-

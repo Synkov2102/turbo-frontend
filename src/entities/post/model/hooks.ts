@@ -1,8 +1,7 @@
 "use client";
 
-import { PaginatedResponse, Post, GetPostsFilters } from "./types";
-import { getPosts } from "../api/get-posts";
-import { getPostById } from "../api/get-post-by-id";
+import { Post, PaginatedResponse, GetPostsFilters } from "./types";
+import { getPosts } from "@/entities/post/api/get-posts";
 import { queryKeys, useAppQuery } from "@/shared/api/react-query";
 
 export function usePosts(filters: GetPostsFilters = {}) {
@@ -11,12 +10,3 @@ export function usePosts(filters: GetPostsFilters = {}) {
     queryFn: () => getPosts(filters),
   });
 }
-
-export function usePost(id: string) {
-  return useAppQuery<Post>({
-    queryKey: queryKeys.post.detail(id),
-    queryFn: () => getPostById(id),
-    enabled: !!id,
-  });
-}
-

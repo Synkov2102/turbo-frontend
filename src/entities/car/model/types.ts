@@ -23,6 +23,13 @@ interface CarBase {
   createdAt?: string; // строка с датой
   status?: "active" | "sold" | "removed" | "unknown";
   lastChecked?: string; // строка с датой последней проверки статуса
+  listingType?: "auction" | "listing";
+  auctionDate?: string; // строка с датой аукциона
+  startingPrice?: {
+    RUB?: number;
+    USD?: number;
+    EUR?: number;
+  };
 }
 
 // features/car/model/types.ts

@@ -55,9 +55,8 @@
   margin: 0;
   color: #fff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-wrap: break-word;
   display: block;
   position: relative;
 }

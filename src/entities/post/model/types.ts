@@ -1,22 +1,3 @@
-export interface Post {
-  id?: string;
-  title: string;
-  text: string;
-  images?: string[];
-  url?: string;
-  createdAt: string;
-}
-
-export interface RawPost {
-  _id?: string;
-  id?: string;
-  title: string;
-  text: string;
-  images?: string[];
-  url?: string;
-  createdAt: string;
-}
-
 export interface PaginationMeta {
   page: number;
   limit: number;
@@ -36,11 +17,31 @@ export interface GetPostsFilters {
   limit?: number;
 }
 
-export function mapPost(raw: RawPost): Post {
-  return {
-    ...raw,
-    id: raw.id || raw._id,
-  };
+export interface Post {
+  id: string;
+  title: string;
+  text: string;
+  images?: string[];
+  createdAt: string;
+  url?: string;
 }
 
+export interface RawPost {
+  _id: string;
+  title: string;
+  text: string;
+  images?: string[];
+  createdAt: string;
+  url?: string;
+}
 
+export function mapPost(raw: RawPost): Post {
+  return {
+    id: raw._id,
+    title: raw.title,
+    text: raw.text,
+    images: raw.images,
+    createdAt: raw.createdAt,
+    url: raw.url,
+  };
+}

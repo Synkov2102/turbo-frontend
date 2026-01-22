@@ -6,7 +6,9 @@
   background: #fff;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
   border: 1px solid #e0e0e0;
 }
 

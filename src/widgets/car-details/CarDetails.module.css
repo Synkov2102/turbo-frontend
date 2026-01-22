@@ -36,64 +36,80 @@
   margin-bottom: 24px;
 }
 
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.priceSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.currencyBtn {
+  color: #666;
+}
+
+.currenciesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.currencyItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.currencyCode {
+  font-weight: 600;
+  min-width: 35px;
+}
+
+.currencyPrice {
+  color: #666;
+  white-space: nowrap;
+}
+
 .price {
   font-weight: 700;
   white-space: nowrap;
   color: var(--mui-palette-primary-main);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 28px;
 }
 
-@media (min-width: 600px) {
-  .price {
-    font-size: 34px;
-    gap: 8px;
-  }
-}
-
-.mainPrice {
-  font-size: inherit;
-}
-
-.otherCurrencies {
-  font-size: 0.75em;
+.startingPrice {
   font-weight: 500;
-  opacity: 0.85;
-}
-
-@media (min-width: 600px) {
-  .otherCurrencies {
-    font-size: 0.7em;
-  }
-}
-
-.currency {
+  font-size: 0.875rem;
+  color: #666;
   white-space: nowrap;
 }
 
 .mainContent {
-  display: flex;
-  flex-direction: column;
   gap: 24px;
-}
-
-@media (min-width: 960px) {
-  .mainContent {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
 }
 
 .imageColumn {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-width: 0;
-  max-width: 100%;
-  width: 100%;
+}
+
+.sourceButton {
+  align-self: flex-start;
+  text-transform: none;
 }
 
 /* --- Swiper --- */
@@ -141,7 +157,9 @@
   background: #f5f5f5;
   cursor: pointer;
   opacity: 0.7;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 
 .thumbItem img {
@@ -170,29 +188,10 @@
 /* --- Info column --- */
 
 .infoBlock {
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-@media (min-width: 960px) {
-  .infoBlockFullWidth {
-    grid-column: 1 / -1;
-  }
-}
-
-.specsCard {
-  background-color: var(--mui-palette-primary-main) !important;
-  border: none !important;
-  color: #fff;
-}
-
-.specsCard :global(.MuiTypography-root) {
-  color: #fff !important;
-}
-
-.specsCard :global(.MuiDivider-root) {
-  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .specGrid {
@@ -209,12 +208,16 @@
 }
 
 .specLabel {
-  color: rgba(255, 255, 255, 0.8);
+  color: #777;
 }
 
 .specValue {
   font-weight: 500;
-  color: #fff;
+}
+
+.specValue :global(.emoji) {
+  vertical-align: middle;
+  margin-left: 4px;
 }
 
 .description {

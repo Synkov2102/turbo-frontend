@@ -38,7 +38,7 @@ export const PostsBanner: FC = () => {
         className={styles.swiper}
       >
         {posts.map((post, index) => (
-          <SwiperSlide key={post.id || `${post.createdAt}-${index}`}>
+          <SwiperSlide key={`${post.createdAt}-${index}`}>
             <BannerPostCard post={post} />
           </SwiperSlide>
         ))}

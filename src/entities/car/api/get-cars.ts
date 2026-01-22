@@ -1,5 +1,12 @@
 import { fetchJson } from "@/shared/api/http";
-import { Car, mapCar, RawCar, PaginatedResponse, PaginationMeta, GetCarsFilters } from "@/entities/car/model/types";
+import {
+  Car,
+  mapCar,
+  RawCar,
+  PaginatedResponse,
+  PaginationMeta,
+  GetCarsFilters,
+} from "@/entities/car/model/types";
 
 interface RawPaginatedResponse {
   data: RawCar[];

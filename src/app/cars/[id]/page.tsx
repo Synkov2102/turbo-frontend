@@ -22,8 +22,15 @@ function generateStructuredData(car: Car) {
     offers: {
       "@type": "Offer",
       priceCurrency: "RUB",
-      price: car.price?.RUB?.toString() || car.price?.USD?.toString() || car.price?.EUR?.toString() || "0",
-      availability: car.status === "active" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      price:
+        car.price?.RUB?.toString() ||
+        car.price?.USD?.toString() ||
+        car.price?.EUR?.toString() ||
+        "0",
+      availability:
+        car.status === "active"
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
       url: car.url || carUrl,
     },
     ...(car.brand && {

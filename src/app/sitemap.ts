@@ -31,7 +31,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Если есть больше страниц, получаем их тоже
     if (carsData.meta.totalPages > 1) {
-      for (let page = 2; page <= Math.min(carsData.meta.totalPages, 10); page++) {
+      for (
+        let page = 2;
+        page <= Math.min(carsData.meta.totalPages, 10);
+        page++
+      ) {
         const pageData = await getCars({ limit: 1000, page });
         for (const car of pageData.data) {
           routes.push({
@@ -49,8 +53,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return routes;
 }
-
-
-
-
-

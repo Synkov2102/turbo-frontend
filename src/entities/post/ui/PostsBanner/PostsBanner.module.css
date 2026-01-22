@@ -10,8 +10,8 @@
 
 .swiper :global(.swiper-button-next),
 .swiper :global(.swiper-button-prev) {
-  color: #fff;
-  background: var(--mui-palette-primary-main);
+  color: #666;
+  background: rgba(255, 255, 255, 0.9);
   padding: 6px 0px;
   width: 40px;
   height: 40px;
@@ -20,19 +20,11 @@
   transition: all 0.2s ease;
 }
 
-.swiper :global(.swiper-button-prev::after) {
-  transform: translateX(-2px);
-}
-
-.swiper :global(.swiper-button-next::after) {
-  transform: translateX(2px);
-}
-
 .swiper :global(.swiper-button-next:hover),
 .swiper :global(.swiper-button-prev:hover) {
-  background: var(--mui-palette-primary-dark);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .swiper :global(.swiper-button-next::after),

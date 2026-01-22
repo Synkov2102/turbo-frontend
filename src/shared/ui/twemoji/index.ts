@@ -1,4 +1,1 @@
 export { TwemojiText } from "./TwemojiText";
-
-
-
