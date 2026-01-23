@@ -43,47 +43,6 @@
   gap: 4px;
 }
 
-.priceSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: flex-end;
-}
-
-.priceRow {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.currencyBtn {
-  color: #666;
-}
-
-.currenciesList {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.currencyItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.875rem;
-  color: #666;
-}
-
-.currencyCode {
-  font-weight: 600;
-  min-width: 35px;
-}
-
-.currencyPrice {
-  color: #666;
-  white-space: nowrap;
-}
-
 .price {
   font-weight: 700;
   white-space: nowrap;
@@ -105,11 +64,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.sourceButton {
-  align-self: flex-start;
-  text-transform: none;
 }
 
 /* --- Swiper --- */
@@ -213,11 +167,6 @@
 
 .specValue {
   font-weight: 500;
-}
-
-.specValue :global(.emoji) {
-  vertical-align: middle;
-  margin-left: 4px;
 }
 
 .description {

@@ -1,14 +1,11 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import styles from "./CarCard.module.css";
 import { Car } from "@/entities/car/model/types";
 import PlaceIcon from "@mui/icons-material/Place";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
-import { IconButton, Tooltip } from "@mui/material";
-import { generateCarTitle, getCountryFlag } from "@/entities/car/lib/car-utils";
-import { TwemojiText } from "@/shared/ui/twemoji";
+import { generateCarTitle, formatPrice } from "@/entities/car/lib/car-utils";
 
 interface CarCardProps {
   car: Car;
@@ -41,46 +38,8 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
   const statusLabel = getStatusLabel(car.status);
   const statusClassName = getStatusClassName(car.status);
   const carTitle = generateCarTitle(car);
-  const [showCurrencies, setShowCurrencies] = useState(false);
-
-  const formatMoney = (value: number, suffix: string) =>
-    `${value.toLocaleString("ru-RU")} ${suffix}`;
-
-  const rubPriceText = (() => {
-    const full = car.price?.RUB;
-    const start = car.startingPrice?.RUB;
-
-    if (start && full) return `${formatMoney(start, "₽")} — ${formatMoney(full, "₽")}`;
-    if (start) return formatMoney(start, "₽");
-    if (full) return formatMoney(full, "₽");
-    return "";
-  })();
-
-  const currencyLines = (() => {
-    const lines: Array<{ code: "USD" | "EUR"; text: string }> = [];
-    const currencies: Array<"USD" | "EUR"> = ["USD", "EUR"];
-
-    for (const code of currencies) {
-      const full = car.price?.[code];
-      const start = car.startingPrice?.[code];
-      if (!full && !start) continue;
-
-      const suffix = code === "USD" ? "$" : "€";
-      const text =
-        start && full
-          ? `${formatMoney(start, suffix)} — ${formatMoney(full, suffix)}`
-          : start
-            ? formatMoney(start, suffix)
-            : formatMoney(full!, suffix);
-      lines.push({ code, text });
-    }
-
-    return lines;
-  })();
-
-  const hasAnyPrice = !!rubPriceText;
-  const hasOtherCurrencies = currencyLines.length > 0;
-  const countryFlag = getCountryFlag(car.location?.country);
+  const hasPrice = car.price && (car.price.RUB || car.price.USD || car.price.EUR);
+  const hasStartingPrice = car.startingPrice && (car.startingPrice.RUB || car.startingPrice.USD || car.startingPrice.EUR);
 
   return (
     <a href={`/cars/${car.id}`} className={styles.card}>
@@ -99,52 +58,29 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
 
       <div className={styles.content}>
         <div className={styles.title}>{carTitle}</div>
-        {hasAnyPrice && (
-          <div className={styles.priceSection}>
-            <div className={styles.priceRow}>
-              <span className={styles.price}>{rubPriceText}</span>
-              {hasOtherCurrencies && (
-                <Tooltip title={showCurrencies ? "Скрыть валюты" : "Показать валюты"}>
-                  <IconButton
-                    size="small"
-                    className={styles.currencyBtn}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setShowCurrencies(!showCurrencies);
-                    }}
-                    aria-label="Показать цены в других валютах"
-                  >
-                    <CurrencyExchangeIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+        {(hasPrice || hasStartingPrice) && (
+            <div className={styles.prices}>
+              {hasPrice && (
+                <span className={styles.price}>
+                  {formatPrice(car.price)}
+                </span>
+              )}
+              {hasStartingPrice && (
+                <span className={styles.startingPrice}>
+                  от {formatPrice(car.startingPrice)}
+                </span>
               )}
             </div>
-            {showCurrencies && hasOtherCurrencies && (
-              <div className={styles.currenciesList}>
-                {currencyLines.map((line) => (
-                  <div key={line.code} className={styles.currencyItem}>
-                    <span className={styles.currencyCode}>{line.code}:</span>
-                    <span className={styles.currencyPrice}>{line.text}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
+          )}
+          
         <div className={styles.footer}>
+         
           {(car.location?.city || car.city) && (
             <span className={styles.city}>
               <PlaceIcon fontSize="small" />{" "}
               <span className={styles.cityName}>
                 {car.location?.city || car.city}
                 {car.location?.country && `, ${car.location.country}`}
-                {countryFlag && (
-                  <TwemojiText as="span" className={styles.cityFlag}>
-                    {countryFlag}
-                  </TwemojiText>
-                )}
               </span>
             </span>
           )}

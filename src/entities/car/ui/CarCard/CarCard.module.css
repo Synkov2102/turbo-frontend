@@ -6,10 +6,7 @@
   background: #fff;
   text-decoration: none;
   color: inherit;
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease,
-    border-color 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
   position: relative;
 }
 
@@ -25,7 +22,6 @@
   padding-top: 62%;
   overflow: hidden;
   background: #f5f5f5;
-  border-radius: 16px 16px 0 0;
 }
 
 .imageWrapper img {
@@ -51,8 +47,7 @@
   display: flex;
   height: 100%;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 4px;
+  justify-content: space-between;
 }
 
 .title {
@@ -70,11 +65,10 @@
 }
 
 .footer {
-  margin-top: 4px;
+  margin-top: 8px;
   display: flex;
-  flex-direction: column;
-  margin-top: auto;
-  gap: 0;
+  justify-content: space-between;
+  align-items: center;
   font-size: 12px;
 }
 
@@ -95,46 +89,6 @@
   white-space: nowrap;
 }
 
-.priceSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.priceRow {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.currencyBtn {
-  color: #666;
-}
-
-.currenciesList {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-left: 4px;
-}
-
-.currencyItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #666;
-}
-
-.currencyCode {
-  font-weight: 600;
-  min-width: 35px;
-}
-
-.currencyPrice {
-  color: #666;
-}
-
 .startingPrice {
   font-weight: 600;
   font-size: 12px;
@@ -149,10 +103,4 @@
 
 .cityName {
   margin: auto 0;
-}
-
-.cityFlag {
-  display: inline-block;
-  vertical-align: baseline;
-  margin-left: 4px;
 }

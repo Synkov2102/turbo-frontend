@@ -42,7 +42,7 @@ export function generateCarTitle(car: {
   }
 
   if (car.engineVolume) {
-    parts.push(`${formatEngineVolume(car.engineVolume)} л`);
+    parts.push(`${car.engineVolume} л`);
   }
 
   if (car.transmission) {
@@ -50,15 +50,6 @@ export function generateCarTitle(car: {
   }
 
   return parts.join(" ") || "Автомобиль";
-}
-
-/**
- * Округляет объём двигателя до десятых (1 знак после запятой).
- */
-export function formatEngineVolume(value: number): string {
-  // toFixed даст строку с точкой; в RU-интерфейсе заменяем на запятую
-  const rounded = (Math.round(value * 10) / 10).toFixed(1);
-  return rounded.replace(".", ",");
 }
 
 /**
@@ -86,68 +77,4 @@ export function formatPrice(price?: {
   }
 
   return parts.join(" / ");
-}
-
-/**
- * Возвращает emoji-флаг по названию / коду страны.
- * Поддерживает основные страны, остальные возвращают пустую строку.
- */
-export function getCountryFlag(country?: string): string {
-  if (!country) return "";
-
-  const normalized = country.trim().toLowerCase();
-
-  const map: Record<string, string> = {
-    // Россия
-    ru: "🇷🇺",
-    "russia": "🇷🇺",
-    "россия": "🇷🇺",
-    // США
-    us: "🇺🇸",
-    "usa": "🇺🇸",
-    "united states": "🇺🇸",
-    "united states of america": "🇺🇸",
-    // Великобритания
-    gb: "🇬🇧",
-    "uk": "🇬🇧",
-    "united kingdom": "🇬🇧",
-    "great britain": "🇬🇧",
-    // Германия
-    de: "🇩🇪",
-    "germany": "🇩🇪",
-    "deutschland": "🇩🇪",
-    // Франция
-    fr: "🇫🇷",
-    "france": "🇫🇷",
-    // Италия
-    it: "🇮🇹",
-    "italy": "🇮🇹",
-    // Испания
-    es: "🇪🇸",
-    "spain": "🇪🇸",
-    "españa": "🇪🇸",
-    // Швейцария
-    ch: "🇨🇭",
-    "switzerland": "🇨🇭",
-    // Нидерланды
-    nl: "🇳🇱",
-    "netherlands": "🇳🇱",
-    "holland": "🇳🇱",
-    // ОАЭ
-    ae: "🇦🇪",
-    "uae": "🇦🇪",
-    "united arab emirates": "🇦🇪",
-    // Япония
-    jp: "🇯🇵",
-    "japan": "🇯🇵",
-    // Китай
-    cn: "🇨🇳",
-    "china": "🇨🇳",
-    // Бельгия
-    be: "🇧🇪",
-    "belgium": "🇧🇪",
-    "бельгия": "🇧🇪",
-  };
-
-  return map[normalized] ?? "";
 }
