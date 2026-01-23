@@ -21,6 +21,7 @@ jobs:
         id: img
         run: |
           echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}:latest" >> $GITHUB_OUTPUT
+          echo "IMAGE_SHA=ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_SHA}" >> $GITHUB_OUTPUT
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -34,17 +35,22 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.img.outputs.IMAGE }}
+          tags: |
+            ${{ steps.img.outputs.IMAGE }}
+            ${{ steps.img.outputs.IMAGE_SHA }}
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          port: ${{ secrets.VPS_SSH_PORT }}
+          port: 22
           key: ${{ secrets.VPS_SSH_KEY }}
+          script_stop: true
+          command_timeout: 20m
           script: |
-            cd /opt/turbo-front
+            set -e
+            cd ${{ secrets.VPS_APP_DIR }}
             docker compose pull
             docker compose up -d
             docker image prune -f
