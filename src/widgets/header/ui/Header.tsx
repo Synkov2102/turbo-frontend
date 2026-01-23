@@ -26,7 +26,7 @@ export function Header() {
             className={styles.logo}
             priority
           />
-          <p>123</p>
+          <p>123123</p>
         </Link>
         <nav className={styles.nav}>
           {navItems.map((item) => {
