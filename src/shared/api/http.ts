@@ -1,6 +1,6 @@
 // Get API URL - Next.js will inline this at build time
 // NEXT_PUBLIC_* variables are replaced at build time, so this becomes a constant string
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://turbo20.ru/api";
 
 export interface HttpOptions extends RequestInit {
   params?: Record<string, string | number | boolean | null | undefined>;

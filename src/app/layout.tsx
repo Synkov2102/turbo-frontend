@@ -5,7 +5,7 @@ import { ReactQueryProvider } from "./ReactQueryProvider";
 import { Header } from "@/widgets/header/ui/Header";
 import styles from "./layout.module.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
 
 export const metadata: Metadata = {
   title: {
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 };
 
 function generateWebsiteStructuredData() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
 
   return {
     "@context": "https://schema.org",

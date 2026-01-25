@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getCars } from "@/entities/car/api/get-cars";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
 
   // Главная страница
   const routes: MetadataRoute.Sitemap = [

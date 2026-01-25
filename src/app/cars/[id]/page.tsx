@@ -9,7 +9,7 @@ interface CarPageProps {
 }
 
 function generateStructuredData(car: Car) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
   const carUrl = `${siteUrl}/cars/${car.id}`;
 
   const structuredData = {
@@ -69,7 +69,7 @@ export async function generateMetadata({
     const { id } = await params;
     const car = await getCarById(id);
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
     const carUrl = `${siteUrl}/cars/${id}`;
     const imageUrl = car.images?.[0] || `${siteUrl}/logo.svg`;
 
