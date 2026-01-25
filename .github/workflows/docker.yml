@@ -27,10 +27,22 @@ jobs:
         id: env
         run: |
           if [ -f .env.production ]; then
-            API_URL=$(grep "^NEXT_PUBLIC_API_URL=" .env.production | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+            echo "Found .env.production file"
+            cat .env.production
+            # Extract value after = sign, trim whitespace, remove quotes
+            API_URL=$(grep "^NEXT_PUBLIC_API_URL=" .env.production | sed 's/^NEXT_PUBLIC_API_URL=//' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed 's/^"//;s/"$//' | sed "s/^'//;s/'$//")
+            if [ -z "$API_URL" ] || [ "$API_URL" = "" ]; then
+              echo "Warning: API_URL is empty or not found, using default"
+              API_URL="https://turbo20.ru/api"
+            fi
             echo "API_URL=${API_URL}" >> $GITHUB_OUTPUT
+            echo "Extracted API_URL: [${API_URL}]"
+            echo "Length: ${#API_URL}"
           else
-            echo "API_URL=https://turbo20.ru/api" >> $GITHUB_OUTPUT
+            echo ".env.production not found, using default"
+            API_URL="https://turbo20.ru/api"
+            echo "API_URL=${API_URL}" >> $GITHUB_OUTPUT
+            echo "Using default API_URL: ${API_URL}"
           fi
 
       - name: Login to GHCR
