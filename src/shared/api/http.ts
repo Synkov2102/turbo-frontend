@@ -1,9 +1,11 @@
+// Get API URL - Next.js will inline this at build time
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 // Debug: log BASE_URL (will be removed in production after verification)
 if (typeof window !== "undefined") {
   console.log("[http.ts] BASE_URL:", BASE_URL);
   console.log("[http.ts] process.env.NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
+  console.log("[http.ts] Full URL example:", `${BASE_URL}/posts`);
 }
 
 export interface HttpOptions extends RequestInit {
