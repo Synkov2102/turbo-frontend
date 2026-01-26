@@ -6,6 +6,7 @@ import { GetCarsFilters } from "@/entities/car/model/types";
 import { useState } from "react";
 import { CarFilters } from "@/entities/car/ui/CarFilters";
 import { PostsBanner } from "@/entities/post/ui/PostsBanner";
+import { PopularBrands } from "@/entities/car/ui/PopularBrands";
 
 export default function HomePage() {
   const [filters, setFilters] = useState<GetCarsFilters>({});
@@ -14,6 +15,14 @@ export default function HomePage() {
   const handleFiltersChange = (newFilters: GetCarsFilters) => {
     setFilters(newFilters);
     setPage(1);
+  };
+
+  const handleBrandSelect = (brand: string) => {
+    handleFiltersChange({
+      ...filters,
+      brand: brand || undefined,
+      model: undefined, // Сбрасываем модель при смене бренда
+    });
   };
 
   const handleFiltersReset = () => {
@@ -32,6 +41,11 @@ export default function HomePage() {
       <section className={styles.header}>
         <h1 className={styles.title}>Каталог автомобилей</h1>
       </section>
+
+      <PopularBrands
+        filters={filters}
+        onBrandSelect={handleBrandSelect}
+      />
 
       <CarFilters
         filters={filters}
