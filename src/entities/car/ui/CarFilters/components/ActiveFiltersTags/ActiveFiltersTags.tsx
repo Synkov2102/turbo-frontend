@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Chip, Box } from "@mui/material";
 import { GetCarsFilters } from "@/entities/car/model/types";
+import { formatEngineVolume } from "@/entities/car/lib/car-utils";
 import styles from "./ActiveFiltersTags.module.css";
 
 interface ActiveFiltersTagsProps {
@@ -77,17 +78,17 @@ export const ActiveFiltersTags: FC<ActiveFiltersTagsProps> = ({
     if (filters.minEngineVolume && filters.maxEngineVolume) {
       activeFilters.push({
         key: "minEngineVolume",
-        label: `Объем: ${filters.minEngineVolume} - ${filters.maxEngineVolume} л`,
+        label: `Объем: ${formatEngineVolume(filters.minEngineVolume)} - ${formatEngineVolume(filters.maxEngineVolume)}`,
       });
     } else if (filters.minEngineVolume) {
       activeFilters.push({
         key: "minEngineVolume",
-        label: `Объем от: ${filters.minEngineVolume} л`,
+        label: `Объем от: ${formatEngineVolume(filters.minEngineVolume)}`,
       });
     } else if (filters.maxEngineVolume) {
       activeFilters.push({
         key: "maxEngineVolume",
-        label: `Объем до: ${filters.maxEngineVolume} л`,
+        label: `Объем до: ${formatEngineVolume(filters.maxEngineVolume)}`,
       });
     }
   }

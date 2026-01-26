@@ -1,0 +1,147 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.containerCard {
+  align-items: flex-start;
+  position: relative;
+  gap: 0;
+  width: fit-content;
+}
+
+.containerDetails {
+  align-items: flex-end;
+  position: relative;
+  gap: 0;
+  width: fit-content;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: var(--mui-palette-primary-main);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 16px;
+  white-space: nowrap;
+}
+
+.containerDetails .price {
+  font-size: 1.5rem;
+  background-color: transparent;
+  color: var(--mui-palette-primary-main);
+  padding: 0;
+}
+
+.otherCurrencies {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-4px) scaleY(0);
+  transform-origin: top;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.containerCard .otherCurrencies {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  margin-left: 8px;
+  z-index: 10;
+  background: #fff;
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.containerDetails .otherCurrencies {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 10;
+  background: #fff;
+  padding: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  max-width: none;
+  align-items: flex-end;
+}
+
+.otherCurrenciesOpen {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.containerCard .otherCurrenciesOpen,
+.containerDetails .otherCurrenciesOpen {
+  padding: 4px 8px;
+}
+
+.otherPrice {
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.containerDetails .otherPrice {
+  font-size: 1.125rem;
+}
+
+.currencyToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  min-width: 24px;
+  min-height: 24px;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.currencyToggle:hover {
+  color: var(--mui-palette-primary-main);
+  background-color: transparent;
+}
+
+.currencyToggle:focus,
+.currencyToggle:focus-visible,
+.currencyToggle:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.currencyToggle[aria-expanded="true"] {
+  transform: rotate(180deg);
+}
+

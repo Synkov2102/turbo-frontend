@@ -3,6 +3,7 @@ import { getCarById } from "@/entities/car/api/get-car-by-id";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Car } from "@/entities/car/model/types";
+import { generateCarTitle } from "@/entities/car/lib/car-utils";
 
 interface CarPageProps {
   params: Promise<{ id: string }>;
@@ -11,12 +12,13 @@ interface CarPageProps {
 function generateStructuredData(car: Car) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
   const carUrl = `${siteUrl}/cars/${car.id}`;
+  const carTitle = generateCarTitle(car);
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: car.title,
-    description: car.description || car.title,
+    name: carTitle,
+    description: car.description || carTitle,
     image: car.images || [],
     url: carUrl,
     offers: {
@@ -68,6 +70,7 @@ export async function generateMetadata({
   try {
     const { id } = await params;
     const car = await getCarById(id);
+    const carTitle = generateCarTitle(car);
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
     const carUrl = `${siteUrl}/cars/${id}`;
@@ -85,13 +88,13 @@ export async function generateMetadata({
       ? `${car.location.city}${car.location.country ? `, ${car.location.country}` : ""}`
       : car.city || "";
 
-    const description = `${car.title}${car.year ? ` ${car.year} года` : ""}${priceText ? `. Цена: ${priceText}` : ""}${locationText ? `. Локация: ${locationText}` : ""}${car.mileage ? `. Пробег: ${car.mileage.toLocaleString("ru-RU")} км` : ""}. ${car.description ? car.description.slice(0, 100) + "..." : ""}`;
+    const description = `${carTitle}${priceText ? `. Цена: ${priceText}` : ""}${locationText ? `. Локация: ${locationText}` : ""}${car.mileage ? `. Пробег: ${car.mileage.toLocaleString("ru-RU")} км` : ""}. ${car.description ? car.description.slice(0, 100) + "..." : ""}`;
 
     return {
-      title: car.title,
+      title: carTitle,
       description: description.slice(0, 160),
       openGraph: {
-        title: car.title,
+        title: carTitle,
         description: description.slice(0, 160),
         url: carUrl,
         type: "website",
@@ -100,13 +103,13 @@ export async function generateMetadata({
             url: imageUrl,
             width: 1200,
             height: 630,
-            alt: car.title,
+            alt: carTitle,
           },
         ],
       },
       twitter: {
         card: "summary_large_image",
-        title: car.title,
+        title: carTitle,
         description: description.slice(0, 160),
         images: [imageUrl],
       },

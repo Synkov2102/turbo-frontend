@@ -6,7 +6,6 @@ import {
   Container,
   Typography,
   Chip,
-  CircularProgress,
   Button,
 } from "@mui/material";
 
@@ -23,7 +22,9 @@ import styles from "./CarDetails.module.css";
 import { InfoCard } from "@/shared/ui/info-card";
 import { Breadcrumbs } from "@/shared/ui/breadcrumbs";
 import { ImageFullscreenGallery } from "@/shared/ui/image-fullscreen-gallery";
-import { formatPrice } from "@/entities/car/lib/car-utils";
+import { PriceDisplay } from "@/shared/ui/price-display";
+import { formatEngineVolume, generateCarTitle } from "@/entities/car/lib/car-utils";
+import { CarDetailsSkeleton } from "./CarDetailsSkeleton";
 
 interface CarDetailsProps {
   carId: string;
@@ -36,16 +37,7 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (isLoading) {
-    return (
-      <Container className={styles.root}>
-        <div className={styles.loader}>
-          <CircularProgress />
-          <Typography variant="body2" mt={2}>
-            Загрузка автомобиля...
-          </Typography>
-        </div>
-      </Container>
-    );
+    return <CarDetailsSkeleton />;
   }
 
   if (error) {
@@ -67,37 +59,42 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
   }
 
   const hasImages = !!car.images && car.images.length > 0;
+  const carTitle = generateCarTitle(car);
+
+  // Извлекаем домен из URL для отображения в кнопке
+  const getDomainFromUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  };
 
   return (
-    <>
+    <Container className={styles.root} disableGutters>
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
           {
             label:
-              car.title.length > 60 ? `${car.title.slice(0, 57)}…` : car.title,
+              carTitle.length > 60 ? `${carTitle.slice(0, 57)}…` : carTitle,
           },
         ]}
       />
       <div className={styles.headerRow}>
         <div className={styles.titleBlock}>
           <Typography variant="h5" component="h1" className={styles.title}>
-            {car.title}
+            {carTitle}
           </Typography>
         </div>
 
-        <div className={styles.priceBlock}>
-          {car.price && (car.price.RUB || car.price.USD || car.price.EUR) && (
-            <Typography variant="h5" className={styles.price}>
-              {formatPrice(car.price)}
-            </Typography>
-          )}
-          {car.startingPrice && (car.startingPrice.RUB || car.startingPrice.USD || car.startingPrice.EUR) && (
-            <Typography variant="body1" className={styles.startingPrice}>
-              от {formatPrice(car.startingPrice)}
-            </Typography>
-          )}
-        </div>
+        <PriceDisplay 
+          price={car.price} 
+          startingPrice={car.startingPrice}
+          variant="details"
+          className={styles.priceBlock}
+        />
       </div>
 
       <div className={styles.badges}>
@@ -144,7 +141,7 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
                       className={styles.mainImageWrapper}
                       onClick={() => setIsGalleryOpen(true)}
                     >
-                      <img src={img} alt={`${car.title} ${index + 1}`} />
+                      <img src={img} alt={`${carTitle} ${index + 1}`} />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -169,7 +166,7 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
                       <div className={styles.thumbItem}>
                         <img
                           src={img}
-                          alt={`${car.title} превью ${index + 1}`}
+                          alt={`${carTitle} превью ${index + 1}`}
                         />
                       </div>
                     </SwiperSlide>
@@ -183,7 +180,20 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
             </div>
           )}
         </div>
-
+         {car.url && (
+         <Button
+           component={Link}
+           href={car.url}
+           target="_blank"
+           rel="noopener noreferrer"
+           variant="contained"
+           color="primary"
+           fullWidth
+           className={styles.sourceButton}
+         >
+           Открыть {getDomainFromUrl(car.url)}
+         </Button>
+       )}
         {/* КОЛОНКА С ИНФОЙ */}
         <div className={styles.infoBlock}>
           <InfoCard title="Характеристики" bodyClassName={styles.specGrid}>
@@ -208,7 +218,7 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
             {car.engineVolume && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Объём двигателя</span>
-                <span className={styles.specValue}>{car.engineVolume} л</span>
+                <span className={styles.specValue}>{formatEngineVolume(car.engineVolume)}</span>
               </div>
             )}
             {car.transmission && (
@@ -232,30 +242,20 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
               </Typography>
             </InfoCard>
           )}
-
-          {car.url && (
-            <Button
-              component={Link}
-              href={car.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="contained"
-              color="primary"
-            >
-              Открыть объявление
-            </Button>
-          )}
         </div>
       </div>
+
+      
+
       {isGalleryOpen && (
         <ImageFullscreenGallery
           open
           images={car.images ?? []}
           initialIndex={activeImageIndex}
-          title={car.title}
+          title={carTitle}
           onClose={() => setIsGalleryOpen(false)}
         />
       )}
-    </>
+    </Container>
   );
 };

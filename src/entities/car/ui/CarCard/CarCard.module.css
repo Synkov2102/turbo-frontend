@@ -73,27 +73,7 @@
 }
 
 .prices {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  align-items: flex-start;
-}
-
-.price {
-  font-weight: 700;
-  font-size: 14px;
-  background-color: var(--mui-palette-primary-main);
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 16px;
-  white-space: nowrap;
-}
-
-.startingPrice {
-  font-weight: 600;
-  font-size: 12px;
-  color: #666;
-  white-space: nowrap;
+  /* Стили для контейнера цен теперь в PriceDisplay компоненте */
 }
 
 .city {

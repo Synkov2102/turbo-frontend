@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   creator: "Turbo20.ru",
   publisher: "Turbo20.ru",
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: "/Logo.svg",
+    shortcut: "/Logo.svg",
+    apple: "/Logo.svg",
+  },
   openGraph: {
     type: "website",
     locale: "ru_RU",

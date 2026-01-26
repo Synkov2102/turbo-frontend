@@ -5,7 +5,8 @@ import { FC } from "react";
 import styles from "./CarCard.module.css";
 import { Car } from "@/entities/car/model/types";
 import PlaceIcon from "@mui/icons-material/Place";
-import { generateCarTitle, formatPrice } from "@/entities/car/lib/car-utils";
+import { generateCarTitle } from "@/entities/car/lib/car-utils";
+import { PriceDisplay } from "@/shared/ui/price-display";
 
 interface CarCardProps {
   car: Car;
@@ -38,8 +39,6 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
   const statusLabel = getStatusLabel(car.status);
   const statusClassName = getStatusClassName(car.status);
   const carTitle = generateCarTitle(car);
-  const hasPrice = car.price && (car.price.RUB || car.price.USD || car.price.EUR);
-  const hasStartingPrice = car.startingPrice && (car.startingPrice.RUB || car.startingPrice.USD || car.startingPrice.EUR);
 
   return (
     <a href={`/cars/${car.id}`} className={styles.card}>
@@ -58,23 +57,14 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
 
       <div className={styles.content}>
         <div className={styles.title}>{carTitle}</div>
-        {(hasPrice || hasStartingPrice) && (
-            <div className={styles.prices}>
-              {hasPrice && (
-                <span className={styles.price}>
-                  {formatPrice(car.price)}
-                </span>
-              )}
-              {hasStartingPrice && (
-                <span className={styles.startingPrice}>
-                  от {formatPrice(car.startingPrice)}
-                </span>
-              )}
-            </div>
-          )}
+        <PriceDisplay 
+          price={car.price} 
+          startingPrice={car.startingPrice}
+          variant="card"
+          className={styles.prices}
+        />
           
         <div className={styles.footer}>
-         
           {(car.location?.city || car.city) && (
             <span className={styles.city}>
               <PlaceIcon fontSize="small" />{" "}
