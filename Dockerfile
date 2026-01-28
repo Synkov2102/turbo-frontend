@@ -8,11 +8,10 @@ RUN npm ci --unsafe-perm=true --allow-root
 # ===== builder =====
 FROM node:20-alpine AS builder
 WORKDIR /app
-RUN chmod -R 777 /app || true
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN chmod -R 777 /app || true
-RUN npm config set unsafe-perm true
+ENV npm_config_unsafe_perm=true
 RUN npm run build
 
 # ===== runner =====
