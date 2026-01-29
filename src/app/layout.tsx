@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeRegistry } from "./ThemeRegistry";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import { Header } from "@/widgets/header/ui/Header";
+import { YandexMetrika } from "./YandexMetrika";
 import styles from "./layout.module.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://turbo20.ru";
@@ -98,6 +99,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <YandexMetrika />
         <ThemeRegistry>
           <ReactQueryProvider>
             <div className={styles.layout}>
