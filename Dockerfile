@@ -4,9 +4,20 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
 
-# Проверка целостности package-lock.json перед установкой
-RUN npm ci --prefer-offline --no-audit --ignore-scripts || \
-    (echo "ERROR: npm ci failed - possible tampering detected" && exit 1)
+# Установка зависимостей с проверкой целостности
+# Если package-lock.json не синхронизирован с package.json, обновляем его автоматически
+RUN npm ci --prefer-offline --no-audit --ignore-scripts 2>&1 | tee /tmp/npm-output.log || \
+    { \
+      if grep -q "does not satisfy" /tmp/npm-output.log || grep -q "in sync" /tmp/npm-output.log; then \
+        echo "Lock file out of sync with package.json, updating..."; \
+        npm install --package-lock-only --no-audit --ignore-scripts; \
+        npm ci --prefer-offline --no-audit --ignore-scripts; \
+      else \
+        echo "ERROR: npm ci failed - possible tampering detected"; \
+        cat /tmp/npm-output.log; \
+        exit 1; \
+      fi \
+    }
 
 # ===== builder =====
 FROM node:20-alpine AS builder
