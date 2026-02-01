@@ -24,7 +24,9 @@ import { Breadcrumbs } from "@/shared/ui/breadcrumbs";
 import { ImageFullscreenGallery } from "@/shared/ui/image-fullscreen-gallery";
 import { PriceDisplay } from "@/shared/ui/price-display";
 import { formatEngineVolume, generateCarTitle } from "@/entities/car/lib/car-utils";
+import { getCountryFlag } from "@/entities/car/lib/country-flag";
 import { CarDetailsSkeleton } from "./CarDetailsSkeleton";
+import { TwemojiText } from "@/shared/ui/twemoji";
 
 interface CarDetailsProps {
   carId: string;
@@ -113,7 +115,17 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
         )}
         {(car.location?.city || car.city) && (
           <Chip 
-            label={car.location?.city || car.city} 
+            label={
+              <TwemojiText as="span">
+                {car.location?.city || car.city}
+                {car.location?.country && (
+                  <>
+                    , {car.location.country}
+                    {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
+                  </>
+                )}
+              </TwemojiText>
+            }
             size="small" 
             variant="outlined" 
           />
@@ -230,7 +242,24 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
             {car.city && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Город</span>
-                <span className={styles.specValue}>{car.city}</span>
+                <TwemojiText as="span" className={styles.specValue}>
+                  {car.city}
+                  {car.location?.country && (
+                    <>
+                      {car.location.country}
+                      {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
+                    </>
+                  )}
+                </TwemojiText>
+              </div>
+            )}
+            {car.location?.country && !car.city && (
+              <div className={styles.specRow}>
+                <span className={styles.specLabel}>Страна</span>
+                <TwemojiText as="span" className={styles.specValue}>
+                  {car.location.country}
+                  {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
+                </TwemojiText>
               </div>
             )}
           </InfoCard>

@@ -79,6 +79,7 @@
 .city {
   display: flex;
   color: #999;
+  font-size: 14px;
 }
 
 .cityName {

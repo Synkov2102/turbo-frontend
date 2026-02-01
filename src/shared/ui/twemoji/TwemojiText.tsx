@@ -37,24 +37,21 @@ export const TwemojiText: FC<TwemojiTextProps> = ({
         img.style.height = "1em";
         img.style.width = "auto";
         img.style.display = "inline-block";
-
-        // Для баннера используем middle с небольшим смещением, для остальных - middle
-        if (banner) {
-          img.style.verticalAlign = "middle";
-          img.style.margin = "0 0.15em";
-          img.style.position = "relative";
-          img.style.top = "-0.05em";
-        } else {
-          img.style.verticalAlign = "middle";
-        }
+        img.style.verticalAlign = "top";
+       
       });
     }
   }, [children, banner]);
 
   const Component = as;
 
+  // TypeScript requires type assertion for dynamic component refs
+  // Cast through unknown to satisfy type checker for polymorphic refs
   return (
-    <Component ref={ref as any} className={className}>
+    <Component
+      ref={ref as unknown as React.Ref<HTMLHeadingElement>}
+      className={className}
+    >
       {children}
     </Component>
   );

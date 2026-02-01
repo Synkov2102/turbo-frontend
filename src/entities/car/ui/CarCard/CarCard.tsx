@@ -6,7 +6,9 @@ import styles from "./CarCard.module.css";
 import { Car } from "@/entities/car/model/types";
 import PlaceIcon from "@mui/icons-material/Place";
 import { generateCarTitle } from "@/entities/car/lib/car-utils";
+import { getCountryFlag } from "@/entities/car/lib/country-flag";
 import { PriceDisplay } from "@/shared/ui/price-display";
+import { TwemojiText } from "@/shared/ui/twemoji";
 
 interface CarCardProps {
   car: Car;
@@ -68,10 +70,15 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
           {(car.location?.city || car.city) && (
             <span className={styles.city}>
               <PlaceIcon fontSize="small" />{" "}
-              <span className={styles.cityName}>
+              <TwemojiText as="span" className={styles.cityName}>
                 {car.location?.city || car.city}
-                {car.location?.country && `, ${car.location.country}`}
-              </span>
+                {car.location?.country && (
+                  <>
+                    , {car.location.country}
+                    {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
+                  </>
+                )}
+              </TwemojiText>
             </span>
           )}
         </div>
