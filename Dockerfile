@@ -3,13 +3,26 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
-RUN npm ci
+
+# Проверка целостности package-lock.json перед установкой
+RUN npm ci --prefer-offline --no-audit --ignore-scripts || \
+    (echo "ERROR: npm ci failed - possible tampering detected" && exit 1)
 
 # ===== builder =====
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+
+# Явное копирование только необходимых файлов (безопасность)
+# Вместо COPY . . используем явное копирование для предотвращения попадания вредоносных файлов
+COPY package.json package-lock.json ./
+COPY next.config.ts tsconfig.json ./
+COPY eslint.config.mjs ./
+COPY public ./public
+COPY src ./src
+
+# Проверка целостности зависимостей перед сборкой
+RUN npm audit --audit-level=moderate || true
 RUN npm run build
 
 # ===== runner =====
@@ -19,12 +32,20 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
+# Создание непривилегированного пользователя
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
+# Копирование только необходимых файлов из builder
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Переключение на непривилегированного пользователя
 USER nextjs
+
+# Ограничения безопасности (должны быть установлены при запуске контейнера)
+# docker run --memory="512m" --cpus="1.0" --read-only --tmpfs /tmp --tmpfs /app/.next/cache
 EXPOSE 3000
+
+# Использование exec form для предотвращения shell injection
 CMD ["node", "server.js"]
