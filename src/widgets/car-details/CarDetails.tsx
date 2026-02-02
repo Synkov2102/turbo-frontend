@@ -24,9 +24,11 @@ import { Breadcrumbs } from "@/shared/ui/breadcrumbs";
 import { ImageFullscreenGallery } from "@/shared/ui/image-fullscreen-gallery";
 import { PriceDisplay } from "@/shared/ui/price-display";
 import { formatEngineVolume, generateCarTitle } from "@/entities/car/lib/car-utils";
-import { getCountryFlag } from "@/entities/car/lib/country-flag";
+import { formatLocationText, getCity, getCountry } from "@/entities/car/lib/location-utils";
+import { getDomainFromUrl } from "@/shared/lib/url-utils";
 import { CarDetailsSkeleton } from "./CarDetailsSkeleton";
 import { TwemojiText } from "@/shared/ui/twemoji";
+import { SpecRow } from "./components/SpecRow";
 
 interface CarDetailsProps {
   carId: string;
@@ -62,16 +64,9 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
 
   const hasImages = !!car.images && car.images.length > 0;
   const carTitle = generateCarTitle(car);
-
-  // Извлекаем домен из URL для отображения в кнопке
-  const getDomainFromUrl = (url: string): string => {
-    try {
-      const urlObj = new URL(url);
-      return urlObj.hostname.replace(/^www\./, "");
-    } catch {
-      return url;
-    }
-  };
+  const locationText = formatLocationText(car);
+  const city = getCity(car);
+  const country = getCountry(car);
 
   return (
     <Container className={styles.root} disableGutters>
@@ -113,17 +108,11 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
             variant="outlined"
           />
         )}
-        {(car.location?.city || car.city) && (
+        {locationText && (
           <Chip 
             label={
               <TwemojiText as="span">
-                {car.location?.city || car.city}
-                {car.location?.country && (
-                  <>
-                    , {car.location.country}
-                    {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
-                  </>
-                )}
+                {locationText}
               </TwemojiText>
             }
             size="small" 
@@ -209,56 +198,27 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
         {/* КОЛОНКА С ИНФОЙ */}
         <div className={styles.infoBlock}>
           <InfoCard title="Характеристики" bodyClassName={styles.specGrid}>
-            {car.brand && (
-              <div className={styles.specRow}>
-                <span className={styles.specLabel}>Марка</span>
-                <span className={styles.specValue}>{car.brand}</span>
-              </div>
-            )}
-            {car.model && (
-              <div className={styles.specRow}>
-                <span className={styles.specLabel}>Модель</span>
-                <span className={styles.specValue}>{car.model}</span>
-              </div>
-            )}
-            {car.year && (
-              <div className={styles.specRow}>
-                <span className={styles.specLabel}>Год выпуска</span>
-                <span className={styles.specValue}>{car.year}</span>
-              </div>
-            )}
-            {car.engineVolume && (
-              <div className={styles.specRow}>
-                <span className={styles.specLabel}>Объём двигателя</span>
-                <span className={styles.specValue}>{formatEngineVolume(car.engineVolume)}</span>
-              </div>
-            )}
-            {car.transmission && (
-              <div className={styles.specRow}>
-                <span className={styles.specLabel}>КПП</span>
-                <span className={styles.specValue}>{car.transmission}</span>
-              </div>
-            )}
-            {car.city && (
+            <SpecRow label="Марка" value={car.brand || ""} />
+            <SpecRow label="Модель" value={car.model || ""} />
+            <SpecRow label="Год выпуска" value={car.year || ""} />
+            <SpecRow 
+              label="Объём двигателя" 
+              value={car.engineVolume ? formatEngineVolume(car.engineVolume) : ""} 
+            />
+            <SpecRow label="КПП" value={car.transmission || ""} />
+            {city && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Город</span>
                 <TwemojiText as="span" className={styles.specValue}>
-                  {car.city}
-                  {car.location?.country && (
-                    <>
-                      {car.location.country}
-                      {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
-                    </>
-                  )}
+                  {locationText}
                 </TwemojiText>
               </div>
             )}
-            {car.location?.country && !car.city && (
+            {country && !city && (
               <div className={styles.specRow}>
                 <span className={styles.specLabel}>Страна</span>
                 <TwemojiText as="span" className={styles.specValue}>
-                  {car.location.country}
-                  {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
+                  {formatLocationText(car)}
                 </TwemojiText>
               </div>
             )}

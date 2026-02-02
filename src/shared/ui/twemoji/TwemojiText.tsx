@@ -21,26 +21,33 @@ export const TwemojiText: FC<TwemojiTextProps> = ({
   >(null);
 
   useEffect(() => {
-    if (ref.current) {
-      // Парсим эмодзи и добавляем класс
-      twemoji.parse(ref.current, {
-        folder: "svg",
-        ext: ".svg",
-        className: "emoji",
-      });
-
-      // Дополнительно применяем стили ко всем img внутри элемента
-      const images = ref.current.querySelectorAll("img");
-
-      images.forEach((img) => {
-        img.classList.add("emoji");
-        img.style.height = "1em";
-        img.style.width = "auto";
-        img.style.display = "inline-block";
-        img.style.verticalAlign = "top";
-       
-      });
+    if (!ref.current) {
+      return;
     }
+
+    // Парсим эмодзи и добавляем класс
+    twemoji.parse(ref.current, {
+      folder: "svg",
+      ext: ".svg",
+      className: "emoji",
+    });
+
+    // Дополнительно применяем стили ко всем img внутри элемента
+    const images = ref.current.querySelectorAll("img");
+
+    images.forEach((img) => {
+      img.classList.add("emoji");
+      img.style.height = "1em";
+      img.style.width = "auto";
+      img.style.display = "inline-block";
+      img.style.verticalAlign = banner ? "middle" : "middle";
+      
+      if (banner) {
+        img.style.margin = "0 0.15em";
+        img.style.position = "relative";
+        img.style.top = "-0.05em";
+      }
+    });
   }, [children, banner]);
 
   const Component = as;

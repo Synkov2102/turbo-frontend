@@ -6,7 +6,7 @@ import styles from "./CarCard.module.css";
 import { Car } from "@/entities/car/model/types";
 import PlaceIcon from "@mui/icons-material/Place";
 import { generateCarTitle } from "@/entities/car/lib/car-utils";
-import { getCountryFlag } from "@/entities/car/lib/country-flag";
+import { formatLocationText, getCity } from "@/entities/car/lib/location-utils";
 import { PriceDisplay } from "@/shared/ui/price-display";
 import { TwemojiText } from "@/shared/ui/twemoji";
 
@@ -41,6 +41,8 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
   const statusLabel = getStatusLabel(car.status);
   const statusClassName = getStatusClassName(car.status);
   const carTitle = generateCarTitle(car);
+  const city = getCity(car);
+  const locationText = formatLocationText(car);
 
   return (
     <a href={`/cars/${car.id}`} className={styles.card}>
@@ -67,17 +69,11 @@ export const CarCard: FC<CarCardProps> = ({ car }) => {
         />
           
         <div className={styles.footer}>
-          {(car.location?.city || car.city) && (
+          {locationText && (
             <span className={styles.city}>
               <PlaceIcon fontSize="small" />{" "}
               <TwemojiText as="span" className={styles.cityName}>
-                {car.location?.city || car.city}
-                {car.location?.country && (
-                  <>
-                    , {car.location.country}
-                    {getCountryFlag(car.location.country) && ` ${getCountryFlag(car.location.country)}`}
-                  </>
-                )}
+                {locationText}
               </TwemojiText>
             </span>
           )}

@@ -1,14 +1,8 @@
 /**
- * Преобразует название страны в эмоджи флаг
+ * Маппинг названий стран на их флаги
+ * Поддерживаются названия на русском и английском языках
  */
-export function getCountryFlag(countryName?: string): string {
-  if (!countryName) return "";
-
-  // Нормализуем название страны (приводим к нижнему регистру и убираем пробелы)
-  const normalized = countryName.trim().toLowerCase();
-
-  // Маппинг названий стран на их флаги
-  const countryFlags: Record<string, string> = {
+const COUNTRY_FLAGS: Readonly<Record<string, string>> = {
     // Страны СНГ и Восточная Европа
     россия: "🇷🇺",
     russia: "🇷🇺",
@@ -151,15 +145,29 @@ export function getCountryFlag(countryName?: string): string {
     "south africa": "🇿🇦",
     египет: "🇪🇬",
     egypt: "🇪🇬",
-  };
+} as const;
+
+/**
+ * Преобразует название страны в эмоджи флаг
+ * @param countryName - название страны на русском или английском языке
+ * @returns эмоджи флаг страны или пустая строка, если страна не найдена
+ */
+export function getCountryFlag(countryName?: string): string {
+  if (!countryName) {
+    return "";
+  }
+
+  // Нормализуем название страны (приводим к нижнему регистру и убираем пробелы)
+  const normalized = countryName.trim().toLowerCase();
 
   // Ищем точное совпадение
-  if (countryFlags[normalized]) {
-    return countryFlags[normalized];
+  const exactMatch = COUNTRY_FLAGS[normalized];
+  if (exactMatch) {
+    return exactMatch;
   }
 
   // Пытаемся найти частичное совпадение
-  for (const [key, flag] of Object.entries(countryFlags)) {
+  for (const [key, flag] of Object.entries(COUNTRY_FLAGS)) {
     if (normalized.includes(key) || key.includes(normalized)) {
       return flag;
     }
