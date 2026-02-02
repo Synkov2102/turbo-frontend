@@ -1,7 +1,7 @@
 .header {
   width: 100%;
   border-bottom: 1px solid #eaeaea;
-  background: var(--mui-palette-primary-main); /* ← Primary MUI color */
+  background: var(--mui-palette-primary-main);
   color: var(--mui-palette-primary-contrastText, #fff);
 }
 

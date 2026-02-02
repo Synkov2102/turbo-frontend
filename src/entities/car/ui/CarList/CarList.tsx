@@ -9,6 +9,7 @@ import { CarCardSkeleton } from "@/entities/car/ui/CarCard/CarCardSkeleton";
 import { GetCarsFilters } from "@/entities/car/model/types";
 import { useCars } from "@/entities/car/model/hooks";
 import { Pagination } from "@/shared/ui/pagination";
+import { CarListError } from "./components/CarListError";
 
 interface CarListProps {
   filters?: GetCarsFilters;
@@ -41,11 +42,7 @@ export const CarList: FC<CarListProps> = ({
   }
 
   if (error) {
-    return (
-      <div className={styles.state}>
-        Ошибка загрузки: {(error as Error).message}
-      </div>
-    );
+    return <CarListError />;
   }
 
   if (!data || data.data.length === 0) {
