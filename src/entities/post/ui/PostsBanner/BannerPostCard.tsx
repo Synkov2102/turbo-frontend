@@ -1,6 +1,7 @@
 "use client";
 
 import { FC } from "react";
+import Link from "next/link";
 import { Post } from "@/entities/post/model/types";
 import { TwemojiText } from "@/shared/ui/twemoji";
 import styles from "./BannerPostCard.module.css";
@@ -33,18 +34,9 @@ export const BannerPostCard: FC<BannerPostCardProps> = ({ post }) => {
 
   const cardClassName = styles.card;
 
-  if (post.url) {
-    return (
-      <a
-        href={post.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cardClassName}
-      >
-        {content}
-      </a>
-    );
-  }
-
-  return <div className={cardClassName}>{content}</div>;
+  return (
+    <Link href={`/posts/${post.id}`} className={cardClassName}>
+      {content}
+    </Link>
+  );
 };

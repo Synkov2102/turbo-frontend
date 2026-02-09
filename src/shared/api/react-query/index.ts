@@ -34,6 +34,7 @@ export const queryKeys = {
     list: (filters: unknown) => ["cars", filters] as const,
   },
   post: {
+    one: (id: string) => ["post", id] as const,
     list: (filters: unknown) => ["posts", filters] as const,
   },
   filters: {
