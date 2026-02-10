@@ -8,29 +8,46 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import styles from "./PopularBrands.module.css";
 import { GetCarsFilters } from "@/entities/car/model/types";
+import { useBrandStats } from "@/entities/car/model/hooks";
 
 interface PopularBrandsProps {
   filters: GetCarsFilters;
   onBrandSelect: (brand: string) => void;
 }
 
-// Популярные классические марки автомобилей
-const POPULAR_BRANDS = [
-  { name: "Mercedes-Benz", logo: "/brands/mercedes.webp", fallback: "MB" },
-  { name: "BMW", logo: "/brands/bmw.webp", fallback: "BMW" },
-  { name: "Audi", logo: "/brands/audi.webp", fallback: "AUDI" },
-  { name: "Porsche", logo: "/brands/porsche.webp", fallback: "P" },
-  { name: "Volkswagen", logo: "/brands/volkswagen.webp", fallback: "VW" },
-  { name: "Ferrari", logo: "/brands/ferrari.webp", fallback: "F" },
-  { name: "Lamborghini", logo: "/brands/lamborghini.webp", fallback: "L" },
-  { name: "Alfa Romeo", logo: "/brands/alfa-romeo.webp", fallback: "AR" },
-];
+// Карта логотипов для брендов, для которых у нас есть картинки
+const BRAND_LOGO_MAP: Record<
+  string,
+  {
+    logo: string;
+    fallback: string;
+  }
+> = {
+  "Mercedes-Benz": { logo: "/brands/mercedes.webp", fallback: "MB" },
+  BMW: { logo: "/brands/bmw.webp", fallback: "BMW" },
+  Audi: { logo: "/brands/audi.webp", fallback: "AUDI" },
+  Porsche: { logo: "/brands/porsche.webp", fallback: "P" },
+  Volkswagen: { logo: "/brands/volkswagen.webp", fallback: "VW" },
+  Ferrari: { logo: "/brands/ferrari.webp", fallback: "F" },
+  Lamborghini: { logo: "/brands/lamborghini.webp", fallback: "L" },
+  "Alfa Romeo": { logo: "/brands/alfa-romeo.webp", fallback: "AR" },
+  Jaguar: { logo: "/brands/jaguar.webp", fallback: "JAG" },
+  MG: { logo: "/brands/mg.webp", fallback: "MG" },
+  Citroen: { logo: "/brands/citroen.webp", fallback: "CIT" },
+  "Aston Martin": { logo: "/brands/aston-martin.webp", fallback: "AM" },
+  Fiat: { logo: "/brands/fiat.webp", fallback: "FIA" },
+  Triumph: { logo: "/brands/triumph.webp", fallback: "TRI" },
+  Bentley: { logo: "/brands/bentley.webp", fallback: "BEN" },
+  Ford: { logo: "/brands/ford.webp", fallback: "FOR" },
+};
 
 export const PopularBrands: FC<PopularBrandsProps> = ({
   filters,
   onBrandSelect,
 }) => {
   const selectedBrand = filters.brand;
+  const { data: brandStats } = useBrandStats();
+  const brands = brandStats?.slice(0, 15) ?? [];
 
   const handleBrandClick = (brand: string) => {
     if (selectedBrand === brand) {
@@ -51,36 +68,53 @@ export const PopularBrands: FC<PopularBrandsProps> = ({
         freeMode
         className={styles.swiper}
       >
-        {POPULAR_BRANDS.map((brand) => {
-          const isSelected = selectedBrand === brand.name;
+        {brands.map((brand) => {
+          const isSelected = selectedBrand === brand.brand;
+          const logoConfig =
+            BRAND_LOGO_MAP[brand.brand] ?? {
+              logo: "/brands/default.webp",
+              fallback: brand.brand.slice(0, 3).toUpperCase(),
+            };
+
           return (
-            <SwiperSlide key={brand.name} className={styles.slide}>
-              <Tooltip title={brand.name} arrow>
-                <IconButton
-                  className={`${styles.brandButton} ${
-                    isSelected ? styles.selected : ""
-                  }`}
-                  onClick={() => handleBrandClick(brand.name)}
-                  aria-label={brand.name}
-                >
-                  <img
-                    src={brand.logo}
-                    alt={brand.name}
-                    className={styles.logoImage}
-                    onError={(e) => {
-                      // Если изображение не загрузилось, показываем текстовый fallback
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                      const fallback = target.nextElementSibling as HTMLElement;
-                      if (fallback) {
-                        fallback.style.display = "block";
-                      }
-                    }}
-                  />
-                  <span className={styles.logoFallback} style={{ display: "none" }}>
-                    {brand.fallback}
+            <SwiperSlide key={brand.brand} className={styles.slide}>
+              <Tooltip
+                title={`${brand.brand} (${brand.count.toLocaleString("ru-RU")})`}
+                arrow
+              >
+                <div className={styles.brandWrapper}>
+                  <IconButton
+                    className={`${styles.brandButton} ${
+                      isSelected ? styles.selected : ""
+                    }`}
+                    onClick={() => handleBrandClick(brand.brand)}
+                    aria-label={brand.brand}
+                  >
+                    <img
+                      src={logoConfig.logo}
+                      alt={brand.brand}
+                      className={styles.logoImage}
+                      onError={(e) => {
+                        // Если изображение не загрузилось, показываем текстовый fallback
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = "none";
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) {
+                          fallback.style.display = "block";
+                        }
+                      }}
+                    />
+                    <span
+                      className={styles.logoFallback}
+                      style={{ display: "none" }}
+                    >
+                      {logoConfig.fallback}
+                    </span>
+                  </IconButton>
+                  <span className={styles.countBadge}>
+                    {brand.count.toLocaleString("ru-RU")}
                   </span>
-                </IconButton>
+                </div>
               </Tooltip>
             </SwiperSlide>
           );

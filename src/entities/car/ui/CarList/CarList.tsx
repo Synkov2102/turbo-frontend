@@ -1,7 +1,9 @@
 "use client";
 
 import { FC, useMemo } from "react";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { IconButton, useMediaQuery, useTheme } from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import styles from "./CarList.module.css";
 import { CarCard } from "@/entities/car/ui/CarCard/CarCard";
@@ -51,12 +53,39 @@ export const CarList: FC<CarListProps> = ({
 
   const startItem = (data.meta.page - 1) * data.meta.limit + 1;
   const endItem = Math.min(data.meta.page * data.meta.limit, data.meta.total);
+  const hasPrev = data.meta.page > 1;
+  const hasNext = data.meta.page < data.meta.totalPages;
 
   return (
     <>
       {data.meta.total > 0 && (
         <div className={styles.info}>
-          Показано {startItem}-{endItem} из {data.meta.total}
+          <span className={styles.infoText}>
+            Показано {startItem}-{endItem} из {data.meta.total}
+          </span>
+          {onPageChange && data.meta.totalPages > 1 && (
+            <div className={styles.infoPager}>
+              <IconButton
+                size="small"
+                className={styles.infoPagerButton}
+                disabled={!hasPrev}
+                onClick={() => hasPrev && onPageChange(data.meta.page - 1)}
+                aria-label="Предыдущая страница"
+              >
+                <ChevronLeftIcon fontSize="small" />
+              </IconButton>
+              <span className={styles.infoPagerPage}>{data.meta.page}</span>
+              <IconButton
+                size="small"
+                className={styles.infoPagerButton}
+                disabled={!hasNext}
+                onClick={() => hasNext && onPageChange(data.meta.page + 1)}
+                aria-label="Следующая страница"
+              >
+                <ChevronRightIcon fontSize="small" />
+              </IconButton>
+            </div>
+          )}
         </div>
       )}
       <div className={styles.grid}>

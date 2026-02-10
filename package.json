@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NEXT_PUBLIC_API_URL=http://localhost:3002 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -26,6 +26,7 @@
     "@types/react-dom": "^19",
     "@types/twemoji": "^13.1.1",
     "baseline-browser-mapping": "^2.9.19",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "^16.1.6",
     "prettier": "^3.8.0",

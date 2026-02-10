@@ -1,7 +1,35 @@
-.info {
+ .info {
   margin-bottom: 16px;
   color: #666;
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.infoText {
+  white-space: nowrap;
+}
+
+.infoPager {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.infoPagerButton {
+  padding: 4px;
+}
+
+.infoPagerPage {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  min-width: 24px;
+  text-align: center;
 }
 
 .grid {

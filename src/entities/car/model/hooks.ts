@@ -6,6 +6,7 @@ import { getCarById } from "@/entities/car/api/get-car-by-id";
 import { queryKeys, useAppQuery } from "@/shared/api/react-query";
 import { getFilterOptions } from "@/entities/car/api/get-filters-options";
 import { getModelsByBrand } from "@/entities/car/api/get-models-by-brand";
+import { BrandStat, getBrandStats } from "@/entities/car/api/get-brand-stats";
 
 export function useCars(filters: GetCarsFilters = {}) {
   return useAppQuery<PaginatedResponse<Car>>({
@@ -21,6 +22,7 @@ export function useCar(id: string) {
     enabled: !!id,
   });
 }
+
 /**
  * Хук для получения опций фильтров
  */
@@ -28,7 +30,7 @@ export function useFilterOptions() {
   return useAppQuery<FilterOptions>({
     queryKey: queryKeys.filters.options(),
     queryFn: () => getFilterOptions(),
-    staleTime: 60 * 1000, // 1 минута`
+    staleTime: 60 * 1000, // 1 минута
   });
 }
 
@@ -41,5 +43,16 @@ export function useModelsByBrand(brand: string | undefined) {
     queryFn: () => getModelsByBrand(brand),
     enabled: !!brand, // Запрос выполняется только если бренд указан
     staleTime: 60 * 1000,
+  });
+}
+
+/**
+ * Хук для получения статистики по брендам
+ */
+export function useBrandStats() {
+  return useAppQuery<BrandStat[]>({
+    queryKey: queryKeys.brand.stats(),
+    queryFn: () => getBrandStats(),
+    staleTime: 5 * 60 * 1000,
   });
 }
