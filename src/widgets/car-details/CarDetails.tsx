@@ -101,7 +101,7 @@ export const CarDetails: FC<CarDetailsProps> = ({ carId }) => {
         {car.year && (
           <Chip label={`${car.year} г.`} size="small" color="primary" />
         )}
-        {car.mileage && (
+        {car.mileage != null && car.mileage > 0 && (
           <Chip
             label={`${car.mileage.toLocaleString("ru-RU")} км`}
             size="small"

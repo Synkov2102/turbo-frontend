@@ -39,6 +39,11 @@ const BRAND_LOGO_MAP: Record<
   Triumph: { logo: "/brands/triumph.webp", fallback: "TRI" },
   Bentley: { logo: "/brands/bentley.webp", fallback: "BEN" },
   Ford: { logo: "/brands/ford.webp", fallback: "FOR" },
+  Renault: { logo: "/brands/renault.webp", fallback: "REN" },
+  "Rolls-Royce": { logo: "/brands/rolls-royce.webp", fallback: "RR" },
+  McLaren: { logo: "/brands/mclaren.webp", fallback: "MCL" },
+  Lotus: { logo: "/brands/lotus.webp", fallback: "LOT" },
+  Mini: { logo: "/brands/mini.webp", fallback: "MIN" },
 };
 
 export const PopularBrands: FC<PopularBrandsProps> = ({

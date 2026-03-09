@@ -41,6 +41,12 @@ export default function HomePage() {
       <section className={styles.header}>
         <h1 className={styles.title}>Каталог автомобилей</h1>
       </section>
+      <section className={styles.intro} aria-label="О сайте">
+        <p className={styles.introText}>
+          Turbo20.ru — мы собираем редкие и интересные автомобили с мировых сайтов
+          в одном месте. Помогаем мечтать об интересном авто или найти машину своей мечты.
+        </p>
+      </section>
 
       <PopularBrands
         filters={filters}

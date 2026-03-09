@@ -87,6 +87,8 @@ const COUNTRY_FLAGS: Readonly<Record<string, string>> = {
     serbia: "🇷🇸",
     словения: "🇸🇮",
     slovenia: "🇸🇮",
+    монако: "🇲🇨",
+    monaco: "🇲🇨",
 
     // Азия
     китай: "🇨🇳",
