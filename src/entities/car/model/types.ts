@@ -54,6 +54,7 @@ export interface GetCarsFilters {
   minPrice?: number;
   maxPrice?: number;
   priceCurrency?: "RUB" | "USD" | "EUR";
+  sort?: "priceAsc" | "priceDesc" | "yearAsc" | "yearDesc";
   city?: string;
   transmission?: string;
   minEngineVolume?: number;

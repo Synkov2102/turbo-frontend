@@ -61,6 +61,7 @@ export default function HomePage() {
       <section>
         <CarList
           filters={filters}
+          onFiltersChange={handleFiltersChange}
           page={page}
           onPageChange={handlePageChange}
         />

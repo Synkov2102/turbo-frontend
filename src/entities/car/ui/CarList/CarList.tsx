@@ -1,9 +1,11 @@
 "use client";
 
-import { FC, useMemo } from "react";
-import { IconButton, useMediaQuery, useTheme } from "@mui/material";
+import React, { FC, useMemo, useState } from "react";
+import { IconButton, Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import SortIcon from "@mui/icons-material/Sort";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import styles from "./CarList.module.css";
 import { CarCard } from "@/entities/car/ui/CarCard/CarCard";
@@ -17,15 +19,18 @@ interface CarListProps {
   filters?: GetCarsFilters;
   page?: number;
   onPageChange?: (page: number) => void;
+  onFiltersChange?: (filters: GetCarsFilters) => void;
 }
 
 export const CarList: FC<CarListProps> = ({
   filters = {},
   page = 1,
   onPageChange,
+  onFiltersChange,
 }) => {
   const theme = useTheme();
   const isWideScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
 
   const limit = useMemo(() => {
     return isWideScreen ? 16 : 10;
@@ -55,6 +60,28 @@ export const CarList: FC<CarListProps> = ({
   const endItem = Math.min(data.meta.page * data.meta.limit, data.meta.total);
   const hasPrev = data.meta.page > 1;
   const hasNext = data.meta.page < data.meta.totalPages;
+  const sortValue: NonNullable<GetCarsFilters["sort"]> = filters.sort ?? "priceAsc";
+
+  const sortLabelMap: Record<NonNullable<GetCarsFilters["sort"]>, string> = {
+    priceAsc: "По возрастанию цены",
+    priceDesc: "По убыванию цены",
+    yearAsc: "По году: старше",
+    yearDesc: "По году: новее",
+  };
+
+  const openSortMenu = (e: React.MouseEvent<HTMLElement>) => {
+    setSortAnchorEl(e.currentTarget);
+  };
+
+  const closeSortMenu = () => setSortAnchorEl(null);
+
+  const applySort = (nextSort: NonNullable<GetCarsFilters["sort"]>) => {
+    onFiltersChange?.({
+      ...filters,
+      sort: nextSort,
+    });
+    closeSortMenu();
+  };
 
   return (
     <>
@@ -63,6 +90,46 @@ export const CarList: FC<CarListProps> = ({
           <span className={styles.infoText}>
             Показано {startItem}-{endItem} из {data.meta.total}
           </span>
+          {onFiltersChange && (
+            <>
+              <button
+                type="button"
+                className={styles.sortButton}
+                onClick={openSortMenu}
+                aria-haspopup="menu"
+                aria-expanded={Boolean(sortAnchorEl)}
+              >
+                <span className={styles.sortIcon} aria-hidden="true">
+                  <SortIcon fontSize="small" />
+                </span>
+                <span className={styles.sortText}>
+                  {sortLabelMap[sortValue]}
+                  <span className={styles.sortChevron} aria-hidden="true">
+                    <ExpandMoreIcon fontSize="small" />
+                  </span>
+                </span>
+              </button>
+              <Menu
+                anchorEl={sortAnchorEl}
+                open={Boolean(sortAnchorEl)}
+                onClose={closeSortMenu}
+                disableScrollLock
+                MenuListProps={{ dense: true }}
+              >
+                {(Object.keys(sortLabelMap) as Array<
+                  NonNullable<GetCarsFilters["sort"]>
+                >).map((key) => (
+                  <MenuItem
+                    key={key}
+                    selected={key === sortValue}
+                    onClick={() => applySort(key)}
+                  >
+                    {sortLabelMap[key]}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </>
+          )}
           {onPageChange && data.meta.totalPages > 1 && (
             <div className={styles.infoPager}>
               <IconButton

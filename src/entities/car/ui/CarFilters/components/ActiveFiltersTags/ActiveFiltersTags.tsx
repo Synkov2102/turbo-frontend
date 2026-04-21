@@ -15,6 +15,20 @@ export const ActiveFiltersTags: FC<ActiveFiltersTagsProps> = ({
 }) => {
   const activeFilters: Array<{ key: keyof GetCarsFilters; label: string }> = [];
 
+  if (filters.sort) {
+    const sortLabelMap: Record<NonNullable<GetCarsFilters["sort"]>, string> = {
+      priceAsc: "Цена: по возрастанию",
+      priceDesc: "Цена: по убыванию",
+      yearAsc: "Год: по возрастанию",
+      yearDesc: "Год: по убыванию",
+    };
+
+    activeFilters.push({
+      key: "sort",
+      label: `Сортировка: ${sortLabelMap[filters.sort]}`,
+    });
+  }
+
   if (filters.brand) {
     activeFilters.push({ key: "brand", label: `Марка: ${filters.brand}` });
   }
