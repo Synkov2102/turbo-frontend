@@ -37,6 +37,9 @@ export const CarFilters: FC<CarFiltersProps> = ({
     } else if (key === "minEngineVolume" || key === "maxEngineVolume") {
       delete newFilters.minEngineVolume;
       delete newFilters.maxEngineVolume;
+    } else if (key === "city" || key === "country") {
+      delete newFilters.city;
+      delete newFilters.country;
     } else {
       delete newFilters[key];
     }

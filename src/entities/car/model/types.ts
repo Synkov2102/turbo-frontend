@@ -35,7 +35,7 @@ interface CarBase {
 // features/car/model/types.ts
 export interface FilterOptions {
   brands: string[];
-  cities: string[];
+  cities: CityOption[];
   transmissions: string[];
   models: string[];
   minYear: number;
@@ -44,6 +44,11 @@ export interface FilterOptions {
   maxPrice: number;
   minEngineVolume: number;
   maxEngineVolume: number;
+}
+
+export interface CityOption {
+  city: string;
+  country: string;
 }
 
 export interface GetCarsFilters {
@@ -56,6 +61,7 @@ export interface GetCarsFilters {
   priceCurrency?: "RUB" | "USD" | "EUR";
   sort?: "priceAsc" | "priceDesc" | "yearAsc" | "yearDesc";
   city?: string;
+  country?: string;
   transmission?: string;
   minEngineVolume?: number;
   maxEngineVolume?: number;

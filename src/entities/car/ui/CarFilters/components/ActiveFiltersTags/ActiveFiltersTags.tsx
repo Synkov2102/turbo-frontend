@@ -1,7 +1,9 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { Chip, Box } from "@mui/material";
 import { GetCarsFilters } from "@/entities/car/model/types";
 import { formatEngineVolume } from "@/entities/car/lib/car-utils";
+import { getCountryFlag } from "@/entities/car/lib/country-flag";
+import { TwemojiText } from "@/shared/ui/twemoji";
 import styles from "./ActiveFiltersTags.module.css";
 
 interface ActiveFiltersTagsProps {
@@ -13,7 +15,10 @@ export const ActiveFiltersTags: FC<ActiveFiltersTagsProps> = ({
   filters,
   onRemoveFilter,
 }) => {
-  const activeFilters: Array<{ key: keyof GetCarsFilters; label: string }> = [];
+  const activeFilters: Array<{
+    key: keyof GetCarsFilters;
+    label: React.ReactNode;
+  }> = [];
 
   if (filters.sort) {
     const sortLabelMap: Record<NonNullable<GetCarsFilters["sort"]>, string> = {
@@ -78,7 +83,15 @@ export const ActiveFiltersTags: FC<ActiveFiltersTagsProps> = ({
   }
 
   if (filters.city) {
-    activeFilters.push({ key: "city", label: `Город: ${filters.city}` });
+    const flag = getCountryFlag(filters.country);
+    activeFilters.push({
+      key: "city",
+      label: (
+        <TwemojiText as="span">{`Город: ${
+          flag ? `${flag} ` : ""
+        }${filters.city}${filters.country ? `, ${filters.country}` : ""}`}</TwemojiText>
+      ),
+    });
   }
 
   if (filters.transmission) {

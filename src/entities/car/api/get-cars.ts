@@ -31,6 +31,7 @@ export async function getCars(
       priceCurrency: filters.priceCurrency,
       sort: filters.sort,
       city: filters.city,
+      country: filters.country,
       transmission: filters.transmission,
       minEngineVolume: filters.minEngineVolume,
       maxEngineVolume: filters.maxEngineVolume,
